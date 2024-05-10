@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+
+    <!-- Botón para colapsar la barra de navegación en dispositivos pequeños -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <img src="assets/logo_v2.png" alt="Logo de la aplicación" style="max-width: 100px; height: auto;" class="navbar-brand mb-2">
+
+
+    
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li *ngIf="!estaAutenticado" class="nav-item">
+          <a class="nav-link" aria-current="page">HOME</a>
+        </li>
+        <li  class="nav-item">
+          <a class="nav-link" aria-current="page">CONTACTO</a>
+        </li>
+        <li  class="nav-item">
+          <a class="nav-link" aria-current="page">CARTA</a>
+        </li>
+        <li *ngIf="!estaAutenticado" class="nav-item">
+          <a class="nav-link" aria-current="page">LOGIN</a>
+        </li>
+        <li *ngIf="!estaAutenticado" class="nav-item">
+          <a class="nav-link"  aria-current="page">REGISTRO</a>
+        </li>
+        <li *ngIf="estaAutenticado" class="nav-item">
+          <a class="nav-link"  aria-current="page">CERRAR SESIÓN</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<ng-template #viewHome>
+
+</ng-template>
