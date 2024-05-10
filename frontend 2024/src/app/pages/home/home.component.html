@@ -32,11 +32,55 @@
     </aside>
     <hr><hr>
     <div class="container mt-5">
-        <div id="comentariosCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="comentariosCarousel" class="carousel slide" data-bs-ride="true">
             <div class="carousel-inner" id="comentariosContainer">
+
+              <div *ngFor="let comentario of comentarios, let i=index" [className]="'carousel-item'+(i===0 ? ' active' : '')">
+                
+                <div class="col-6 mx-auto comentario"> {{comentario.comentario}}</div>
+                      
+                      
+                
+                
+                </div>
+      
+
+                            
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#comentariosCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#comentariosCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
         </div>
     </div>
     
 
-    
+    <!-- // const cargarComentarios = async (comentarios: any) => {
+        //   const comentariosContainer: any = document.getElementById(
+        //     'comentariosContainer'
+        //   );
+        
+        //   comentarios.forEach((comentario: any, index: number) => {
+        //     const comentarioDiv = document.createElement('div');
+        //     comentarioDiv.className = 'carousel-item' + (index === 0 ? ' active' : '');
+        
+        //     const rowDiv = document.createElement('div');
+        //     rowDiv.className = 'row';
+        
+        //     const colDiv = document.createElement('div');
+        //     colDiv.className = 'col-6 mx-auto';
+        
+        //     const comentarioElement = document.createElement('div');
+        //     comentarioElement.className = 'comentario';
+        //     comentarioElement.textContent = comentario.comentario;
+        
+        //     colDiv.appendChild(comentarioElement);
+        //     rowDiv.appendChild(colDiv);
+        //     comentarioDiv.appendChild(rowDiv);
+        //     comentariosContainer.appendChild(comentarioDiv);
+        //   });
+        // }; -->
