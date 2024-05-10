@@ -8,8 +8,7 @@ import { CarritoComponent } from './pages/carrito/carrito.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, DashboardComponent, CheckoutComponent],
-  imports: [RouterOutlet, CarritoComponent],
+  imports: [CommonModule, RouterOutlet, DashboardComponent, CheckoutComponent, CarritoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
