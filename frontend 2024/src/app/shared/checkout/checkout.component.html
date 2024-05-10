@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+</head>
+<body>
+  <div class="checkout-form">
+    <h2> Paga Nuestro Producto </h2>
+    <form>
+
+      <label for="email">
+          <input type="text" id="email" name="email" placeholder="Correo Electronico">
+      </label>
+      
+      <label for="name">
+        <input type="text" id="name" name="name" placeholder="Nombre">
+        <input type="text" id="surname" name="surname" placeholder="Apellido">
+      </label>
+
+      <label for="adress">
+        <input type="text" id="email" name="email" placeholder="Correo Electronico">
+        <select id="provincias">
+          <option value="seleccionar" selected>Seleccionar Provincia</option>
+          <option value="alava">Álava</option>
+          <option value="albacete">Albacete</option>
+          <option value="alicante">Alicante</option>
+          <!-- Agrega más opciones según sea necesario -->
+        </select>
+      </label>
+      
+      <button type="submit">Pagar</button>
+    </form>
+  </div>
+</body>
+</html>
