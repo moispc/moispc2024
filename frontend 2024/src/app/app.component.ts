@@ -10,15 +10,19 @@ import { CartaComponent } from './pages/carta/carta.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CarritoComponent, CommonModule, 
+  imports: [
+    RouterOutlet,
+    CarritoComponent,
+    CommonModule,
     DashboardComponent,
     CheckoutComponent,
-  HomeComponent,
-ExitoComponent,
-CartaComponent],
+    HomeComponent,
+    ExitoComponent,
+    CartaComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'app';
+  title = 'ISPC Food';
 }
