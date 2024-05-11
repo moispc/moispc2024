@@ -5,11 +5,15 @@
     --color-primario: #EEEEEE;
     --color-secundario: #00ADB5;
     --color-terciario: #393E46;
-    --color-cuaternario: #222831;
+    --color-cuaternario: #1A1A1A;
 }
 
 body{
-    background-color: var(--color-cuaternario);
+    margin: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: #1A1A1A;
+    color: #fff8da;
+    
 }
 
 .text-color-primario{
