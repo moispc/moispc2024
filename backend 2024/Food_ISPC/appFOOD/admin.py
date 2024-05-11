@@ -15,13 +15,13 @@ class UsuarioAdmin(admin.ModelAdmin):
     list_display = ( 'telefono', 'nombre', 'apellido', 'isadmin', 'password' )
 
 class PedidoAdmin(admin.ModelAdmin):
-    list_display = ( 'id_pedidos', 'id_usuario', 'fecha_pedido', 'hora_pedido', 'total', 'direccion_entrega')
+    list_display = ( 'id_pedidos', 'id_usuario', 'fecha_pedido', 'hora_pedido', 'direccion_entrega')
 
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ( 'nombre_producto', 'descripcion', 'precio', 'id_categoria')
     
 class DetallePedidoAdmin(admin.ModelAdmin):
-    list_display = ( 'id_pedido', 'id_producto', 'cantidad_productos', 'precio_producto', 'subtotal')
+    list_display = ( 'id_pedido', 'id_producto', 'cantidad_productos', 'precio_producto')
 
 
 
