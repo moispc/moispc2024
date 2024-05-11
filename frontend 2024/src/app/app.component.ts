@@ -8,6 +8,7 @@ import { ExitoComponent } from './pages/exito/exito.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CartaComponent } from './pages/carta/carta.component';
 import { NavComponent } from './shared/nav/nav.component';
+import { RegistroComponent } from './pages/auth/registro/registro.component';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ import { NavComponent } from './shared/nav/nav.component';
     HomeComponent,
     ExitoComponent,
     CartaComponent,
+    RegistroComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
