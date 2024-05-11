@@ -17,7 +17,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zdm3e^#en&e^y=lk=vc^&(sfyeek802h45ln=7y1=ma&6tq^f^'
+SECRET_KEY = 'django-insecure-lq50bruj9vl$-l1#drn=*iof2z%f%nl!j05(ce#*s$e2xhixc='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'appFOOD'
 ]
 
 MIDDLEWARE = [
@@ -83,13 +83,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get('DB_NAME'),
+        # 'NAME': 'prueba',
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': 'localhost',
         'PORT': os.environ.get('DB_PORT'),
-        'OPTIONS':{
-            'init_command':"SET sql_mode='STRICT_TRANS_TABLES', innodb_strict_mode=1" 
-        }
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+            }
+
+
 
     }
 }
