@@ -3,11 +3,12 @@ from django.db import models
 # Create your models here.
 
 class CategoriaProducto(models.Model):
-    id_categoria = models.AutoField(primary_key=True)  # Field name made lowercase.
-    nombre_categoria = models.CharField(max_length=45)  # Field name made lowercase.
+    id_categoria = models.AutoField(primary_key=True)  
+    nombre_categoria = models.CharField(max_length=45)  
     descripcion = models.CharField(max_length=45)
 
     class Meta:
+        managed = True
         db_table = 'categoria_producto'
         verbose_name = 'Categoriaproducto'
         verbose_name_plural = 'Categoriaproductos'
@@ -17,14 +18,15 @@ class CategoriaProducto(models.Model):
         return self.nombre_categoria
 
 class Usuario(models.Model):
-    id_usuario = models.AutoField(primary_key=True)  # Field name made lowercase.
-    nombre = models.CharField(max_length=45)  # Field name made lowercase.
+    id_usuario = models.AutoField(primary_key=True)  
+    nombre = models.CharField(max_length=45)  
     apellido = models.CharField(max_length=45)
     telefono = models.CharField(max_length=13)
-    isadmin = models.BooleanField()  # Field name made lowercase.
+    isadmin = models.BooleanField()  
     password = models.CharField(max_length=45)
 
     class Meta:
+        managed = True
         db_table = 'usuario'
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
@@ -36,12 +38,12 @@ class Usuario(models.Model):
 class Pedido(models.Model):
     id_pedidos = models.AutoField(primary_key=True)
     id_usuario = models.ForeignKey(Usuario, models.DO_NOTHING)
-    fecha_pedido = models.DateField()  # Field name made lowercase.
-    hora_pedido = models.IntegerField()  # Field name made lowercase.
-    total = models.IntegerField()
-    direccion_entrega = models.IntegerField()  # Field name made lowercase.
+    fecha_pedido = models.DateField()  
+    hora_pedido = models.IntegerField()  
+    direccion_entrega = models.IntegerField()  
 
     class Meta:
+        managed = True
         db_table = 'pedido'
         verbose_name = 'Pedido'
         verbose_name_plural = 'Pedidos'
@@ -51,14 +53,14 @@ class Pedido(models.Model):
         return self.id_pedidos 
 
 class Producto(models.Model):
-    id_producto = models.AutoField(primary_key=True)  # Field name made lowercase.
-    nombre_producto = models.CharField(max_length=45)  # Field name made lowercase.
+    id_producto = models.AutoField(primary_key=True)  
+    nombre_producto = models.CharField(max_length=45)  
     descripcion = models.CharField(max_length=45)
     precio = models.FloatField()
-    id_categoria = models.ForeignKey(CategoriaProducto, models.DO_NOTHING)  # Field name made lowercase.
+    id_categoria = models.ForeignKey(CategoriaProducto, models.DO_NOTHING)  
 
     class Meta:
-        # managed = False
+        managed = True
         db_table = 'producto'
         verbose_name = 'Producto'
         verbose_name_plural = 'Productos'
@@ -68,15 +70,13 @@ class Producto(models.Model):
         return self.nombre_producto
 
 class DetallePedido(models.Model):
-    id_detalle = models.AutoField(primary_key=True)  # Field name made lowercase.
-    id_pedido = models.ForeignKey('Pedido', models.DO_NOTHING)  # Field name made lowercase.
-    id_producto = models.ForeignKey('Producto', models.DO_NOTHING)  # Field name made lowercase.
-    cantidad_productos = models.IntegerField()  # Field name made lowercase.
-    precio_producto = models.FloatField()  # Field name made lowercase.
-    subtotal = models.FloatField()  # Field name made lowercase.
-
+    id_detalle = models.AutoField(primary_key=True)  
+    id_pedido = models.ForeignKey('Pedido', models.DO_NOTHING)  
+    id_producto = models.ForeignKey('Producto', models.DO_NOTHING)  
+    cantidad_productos = models.IntegerField()  
+    precio_producto = models.FloatField()  
     class Meta:
-        # managed = False
+        managed = True
         db_table = 'detalle_pedido'
         verbose_name = 'Detallepedido'
         verbose_name_plural = 'Detallepedidos'
