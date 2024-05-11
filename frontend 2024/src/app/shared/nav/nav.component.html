@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li *ngIf="!estaAutenticado" class="nav-item">
-          <a class="nav-link"  routerLink="/home"  aria-current="page">HOME</a>
+          <a class="nav-link active"  routerLink="/home"  aria-current="page">HOME</a>
         </li>
         <li  class="nav-item">
           <a class="nav-link" aria-current="page">CONTACTO</a>
@@ -22,13 +22,13 @@
           <a class="nav-link" routerLink="/carta" aria-current="page">CARTA</a>
         </li>
         <li *ngIf="!estaAutenticado" class="nav-item">
-          <a class="nav-link" aria-current="page">LOGIN</a>
+          <a class="nav-link" routerLink="/login" aria-current="page">LOGIN</a>
         </li>
         <li *ngIf="!estaAutenticado" class="nav-item">
-          <a class="nav-link"  aria-current="page">REGISTRO</a>
+          <a class="nav-link" routerLink="/registro" aria-current="page">REGISTRO</a>
         </li>
         <li *ngIf="estaAutenticado" class="nav-item">
-          <a class="nav-link"  aria-current="page">CERRAR SESIÓN</a>
+          <a class="nav-link" routerLink="/"  aria-current="page">CERRAR SESIÓN</a>
         </li>
       </ul>
     </div>
