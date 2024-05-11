@@ -7,10 +7,13 @@ import { CarritoComponent } from './pages/carrito/carrito.component';
 import { ExitoComponent } from './pages/exito/exito.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CartaComponent } from './pages/carta/carta.component';
+import { NavComponent } from './shared/nav/nav.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    NavComponent,
     RouterOutlet,
     CarritoComponent,
     CommonModule,

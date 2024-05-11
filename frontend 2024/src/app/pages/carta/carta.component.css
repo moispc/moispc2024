@@ -1,5 +1,5 @@
 
-/* estilo global para los colores de la página 
+/* estilo global para los colores de la página
 hay 4 colores para mantener el estilo global de la página. El modo de usarlos es:
 var(--color-primario)
 var(--color-secundario)
@@ -202,7 +202,7 @@ hr {
   z-index: 1;
   transition: 1s;
   box-shadow: 0 0 10px 5px rgba(10, 10, 10, 0.5);
-   
+
 }
 
 .sidebar.hidden{
@@ -230,7 +230,7 @@ li.product-card{
 }
 
 .delete-item:hover{
-  color: red;  
+  color: red;
 }
 
 .product-title{
@@ -252,8 +252,8 @@ footer{
   margin-top: 20px;
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  background-color:#00acb561; 
-} 
+  background-color:#00acb561;
+}
 
 #lista {
   font-size: 2rem;
