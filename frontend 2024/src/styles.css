@@ -70,9 +70,9 @@ body{
 }
 
 .header_basic{
-    display: flex; 
+    display: flex;
     font-size: 20px;
-    justify-content: space-around; 
+    justify-content: space-around;
     margin-top: 10px;
     align-items: center;
 }
@@ -86,5 +86,5 @@ footer{
     margin-top: 20px;
     text-align: center;
     font-family: 'Roboto', sans-serif;
-    background-color:#00ADB5; 
-} 
+    background-color:#00ADB5;
+}

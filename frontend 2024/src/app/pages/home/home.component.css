@@ -1,5 +1,5 @@
 
-/* estilo global para los colores de la página 
+/* estilo global para los colores de la página
 hay 4 colores para mantener el estilo global de la página. El modo de usarlos es:
 var(--color-primario)
 var(--color-secundario)
@@ -50,7 +50,7 @@ a{
 nav a{
     font-weight: 600;
     padding-right: 40px;
-    
+
 }
 
 .nav_barra{
@@ -84,7 +84,7 @@ nav a:hover{
 }
 
 hr {
-    width: 50%; 
+    width: 50%;
     margin: 0 auto;
     size:2px;
     width:80%;
@@ -104,12 +104,12 @@ hr {
     text-align: center;
     font-family: 'Roboto', sans-serif;
     background-color: #fff8da;
-    border-radius: 10px; 
-    padding: 10px; 
-    margin-bottom: 10px; 
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     line-height: 1.4;
-    color: #333; 
+    color: #333;
 }
 
 footer{
@@ -117,8 +117,8 @@ footer{
     margin-top: 20px;
     text-align: center;
     font-family: 'Roboto', sans-serif;
-    background-color:#00acb561; 
-} 
+    background-color:#00acb561;
+}
 
 #lista {
     font-size: 2rem;
@@ -133,7 +133,7 @@ footer{
 @media (width <= 768px) {
         .header_basic{
             flex-direction: column;
-            
+
     }
     nav a{
         font-size:20px;
