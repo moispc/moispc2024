@@ -4,6 +4,8 @@ import { CarritoComponent } from './pages/carrito/carrito.component';
 import { CartaComponent } from './pages/carta/carta.component';
 import { CheckoutComponent } from './shared/checkout/checkout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { RegistroComponent } from './pages/auth/registro/registro.component';
+import { ExitoComponent } from './pages/exito/exito.component';
 
 export const routes: Routes = [
     {path:"home", component:HomeComponent},
@@ -12,4 +14,7 @@ export const routes: Routes = [
     {path:"carrito", component:CarritoComponent},
     {path:"pagar", component:CheckoutComponent},
     {path:"dashboard", component:DashboardComponent}
+    {path:"registro", component:RegistroComponent},
+    {path:"exito", component:ExitoComponent}
+    
 ];
