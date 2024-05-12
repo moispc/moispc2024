@@ -13,7 +13,7 @@ export const routes: Routes = [
     {path:"carta", component:CartaComponent},
     {path:"carrito", component:CarritoComponent},
     {path:"pagar", component:CheckoutComponent},
-    {path:"dashboard", component:DashboardComponent}
+    {path:"dashboard", component:DashboardComponent},
     {path:"registro", component:RegistroComponent},
     {path:"exito", component:ExitoComponent}
     
