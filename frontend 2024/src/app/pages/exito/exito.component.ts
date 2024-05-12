@@ -9,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class ExitoComponent {
 
+ printDiv() {
+    window.print();
+    
+    window.location.href = './home';
+}
+
 }
