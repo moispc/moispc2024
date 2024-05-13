@@ -9,6 +9,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { CartaComponent } from './pages/carta/carta.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
+import { NosotrosDevsComponent} from './pages/nosotros-devs/nosotros-devs.component';
+
+
 
 @Component({
   selector: 'app-root',
@@ -23,8 +26,11 @@ import { RegistroComponent } from './pages/auth/registro/registro.component';
     HomeComponent,
     ExitoComponent,
     CartaComponent,
-    RegistroComponent
+    RegistroComponent,
+    NosotrosDevsComponent
+
   ],
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
