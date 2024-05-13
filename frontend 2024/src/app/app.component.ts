@@ -11,6 +11,9 @@ import { NavComponent } from './shared/nav/nav.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { NosotrosDevsComponent} from './pages/nosotros-devs/nosotros-devs.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { InicioSesionComponent } from './pages/auth/inicio-sesion/inicio-sesion.component';
+import { ContactoComponent } from './pages/contacto/contacto.component';
+
 
 @Component({
   selector: 'app-root',
@@ -27,7 +30,9 @@ import { FooterComponent } from './shared/footer/footer.component';
     CartaComponent,
     RegistroComponent,
     NosotrosDevsComponent,
-    FooterComponent
+    FooterComponent,
+    ContactoComponent,
+    InicioSesionComponent
   ],
 
   templateUrl: './app.component.html',
