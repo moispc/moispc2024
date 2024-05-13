@@ -10,8 +10,7 @@ import { CartaComponent } from './pages/carta/carta.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { NosotrosDevsComponent} from './pages/nosotros-devs/nosotros-devs.component';
-
-
+import { FooterComponent } from './shared/footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -27,8 +26,8 @@ import { NosotrosDevsComponent} from './pages/nosotros-devs/nosotros-devs.compon
     ExitoComponent,
     CartaComponent,
     RegistroComponent,
-    NosotrosDevsComponent
-
+    NosotrosDevsComponent,
+    FooterComponent
   ],
 
   templateUrl: './app.component.html',
