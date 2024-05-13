@@ -1,0 +1,77 @@
+.cart-container{
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
+    background-color: rgb(62, 156, 62, .7);
+    width: 50px;
+    height: 50px;
+    margin-top: 50px;
+    margin-left: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.shopping-cart{
+    font-size: 2rem;
+}
+
+.sidebar{
+    height: 100vh;
+    width: 300px;
+    background-color: var(--color-secundario);
+    z-index: 1;
+    transition: 1s;
+    box-shadow: 0 0 10px 5px rgba(10, 10, 10, 0.5);
+}
+
+.close {
+    top: 10px;
+    right: 15px;
+    font-size: 40px;
+    cursor: pointer;
+  }
+
+  .sidebar{
+    height: 100vh;
+    width: 300px;
+    background-color: var(--color-secundario);
+    z-index: 1;
+    transition: 1s;
+    box-shadow: 0 0 10px 5px rgba(10, 10, 10, 0.5);
+  }
+
+  .product-card{
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
+    height: 100%; /* Se ajusta automáticamente la altura */
+    overflow: hidden;
+    border: 1px solid #ddd; /* Borde para dar apariencia de tarjeta rectangular */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-bottom: 15px; /* Espaciado entre tarjetas */
+    display: flex;
+    align-items: center;
+    margin-left: -15px;
+  }
+
+  .card-content {
+    width: 100%;
+}
+
+  .img-container {
+    flex: 0 0 auto; /* La imagen no debe crecer ni encoger */
+    padding: 20px;
+  }
+
+  .product-info {
+    flex: 1; /* La información del producto ocupa todo el espacio disponible */
+}
+
+  .btn-pay {
+    background-color: var(--color-terciario);
+    color: var(--color-primario);
+  }
