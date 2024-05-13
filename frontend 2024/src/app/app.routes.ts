@@ -7,6 +7,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { ExitoComponent } from './pages/exito/exito.component';
 import { NosotrosDevsComponent } from './pages/nosotros-devs/nosotros-devs.component';
+import { ContactoComponent } from './pages/contacto/contacto.component';
+import { InicioSesionComponent } from './pages/auth/inicio-sesion/inicio-sesion.component';
+
 
 export const routes: Routes = [
     {path:"home", component:HomeComponent},
@@ -17,7 +20,9 @@ export const routes: Routes = [
     {path:"dashboard", component:DashboardComponent},
     {path:"registro", component:RegistroComponent},
     {path:"exito", component:ExitoComponent},
+    {path:"login", component:InicioSesionComponent},
     {path:"quienes-somos", component:NosotrosDevsComponent},
+    {path:"contacto", component:ContactoComponent},
 
 
 ];
