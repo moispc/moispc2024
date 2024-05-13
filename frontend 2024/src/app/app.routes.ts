@@ -6,6 +6,7 @@ import { CheckoutComponent } from './shared/checkout/checkout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { ExitoComponent } from './pages/exito/exito.component';
+import { NosotrosDevsComponent } from './pages/nosotros-devs/nosotros-devs.component';
 
 export const routes: Routes = [
     {path:"home", component:HomeComponent},
@@ -15,6 +16,8 @@ export const routes: Routes = [
     {path:"pagar", component:CheckoutComponent},
     {path:"dashboard", component:DashboardComponent},
     {path:"registro", component:RegistroComponent},
-    {path:"exito", component:ExitoComponent}
-    
+    {path:"exito", component:ExitoComponent},
+    {path:"quienes-somos", component:NosotrosDevsComponent},
+
+
 ];

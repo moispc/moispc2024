@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CartaComponent } from './pages/carta/carta.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
+import { NosotrosDevsComponent} from './pages/nosotros-devs/nosotros-devs.component';
 import { FooterComponent } from './shared/footer/footer.component';
 
 @Component({
@@ -25,8 +26,10 @@ import { FooterComponent } from './shared/footer/footer.component';
     ExitoComponent,
     CartaComponent,
     RegistroComponent,
+    NosotrosDevsComponent,
     FooterComponent
   ],
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
