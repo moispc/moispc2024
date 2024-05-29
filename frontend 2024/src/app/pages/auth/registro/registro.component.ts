@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../../../../model/usuario.model';
+import { Usuario } from '../../../../app/model/usuario.model';
 import {
   FormBuilder,
   FormGroup,
