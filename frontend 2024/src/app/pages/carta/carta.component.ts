@@ -1,15 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { NgFor, CommonModule } from '@angular/common';
-import { Producto } from '../../../model/producto.model';
+import { Producto } from '../../../app/model/producto.model';
+import { ProductsService } from '../../services/products.service';
 
 const myModal = document.getElementById('myModal');
 const myInput = document?.getElementById('myInput');
 
-const fetchComentarios = async () => {
-  const response = await fetch('assets/data/infoProducts.json');
-  return await response.json();
-};
+// const fetchComentarios = async () => {
+//   const response = await fetch('assets/data/infoProducts.json');
+//   return await response.json();
+// };
 
 @Component({
   selector: 'app-carta',
@@ -20,32 +21,46 @@ const fetchComentarios = async () => {
 })
 export class CartaComponent implements OnInit {
   @Input() public producto: Producto;
-  productos: any[] = [];
-
-  constructor() {
+  productos: any;
+  
+  constructor(productService: ProductsService) {
     this.producto = {
-      id: 0,
-      title: '',
+      id_producto: 0,
+      nombre_producto: '',
       image: {},
-      price: 0,
-      quantity: 1,
-      total: 0,
+      precio: 0,
+      descripcion:''
+      
     };
+
+    this.productos = productService.getProducts().subscribe({
+      next:(productos)=>{
+        this.productos=productos;
+      },
+      error:(error)=>{
+        console.error(error);
+      }}
+    );
+
+
+
+
   }
   ngOnInit(): void {
-    fetchComentarios().then((productos: any[]) => {
-      this.productos = productos;
-      console.log(this.productos);
-    });
+    // fetchComentarios().then((productos: any[]) => {
+    //   this.productos = productos;
+    //   console.log(this.productos);
+    // });
   }
 
   cargarModal(producto: Producto) {
-    this.producto.title = producto.title;
+    this.producto.nombre_producto = producto.nombre_producto;
     this.producto.image = producto.image;
-    this.producto.price = producto.price;
-   console.log(producto.quantity);
-    this.producto.total = producto.price * producto.quantity;
+    this.producto.precio = producto.precio;
+   
+    //this.producto.total = producto.price * producto.quantity;
 
-    console.log(this.producto);
+   
   }
+
 }
