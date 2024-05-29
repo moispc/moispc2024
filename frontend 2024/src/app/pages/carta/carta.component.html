@@ -1,8 +1,7 @@
 <h1 class="title">Conoce nuestra variedad de comidas.</h1>
 
 <section class="container-cards container">
-  <!-- Aca se generará de forma dinamica las cartas atraves de JavaScript.
-     -->
+  <!-- Aca se generará de forma dinamica las cartas atraves de JavaScript.-->
   <div class="card-t" *ngFor="let product of productos">
     <div class="card-info">
       <div class="row">
@@ -15,10 +14,10 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-info--title mb-5">{{ product.title }}</h5>
-            <p class="card-info-description">{{ product.description }}</p>
+            <h5 class="card-info--title mb-5">{{ product.nombre_producto }}</h5>
+            <p class="card-info-description">{{ product.descripcion }}</p>
             <p class="card-text">
-              <small class="text-body-secondary">Last updated 3 mins ago</small>
+              <small class="text-body-emphasis">{{"$ "+product.precio}}</small>
             </p>
             <button class="btn btn-primary card-button mt-3"  data-bs-target="#modalCompra" data-bs-toggle="modal" (click)="cargarModal(product)">Comprar</button>
           </div>
@@ -37,12 +36,12 @@
       </div>
       <div class="modal-body">
         <img class="modal-img img-fluid" src="{{producto.image.imageURL}}" alt="" />
-      <h2 class="modal-title">{{producto.title}}</h2>
+      <h2 class="modal-title">{{producto.nombre_producto}}</h2>
       <hr />
-      <p class="modal-price">El precio del producto es ${{producto.price}}</p>
+      <p class="modal-price">El precio del producto es ${{producto.precio}}</p>
       <p class="modal-text">Ingrese la cantidad a comprar.</p>
       <input class="modal-input" type="number" value="1" min="1" id="quantify"/>
-      <h3 class="modal-total">{{producto.total}}</h3>
+      <h3 class="modal-total">{{0}}</h3>
       <p class="modal-textConfirm">¿Desea realizar la compra?</p>
       <hr />
       </div>
@@ -92,7 +91,5 @@
       <button class="btn btn-pay mt-auto rounded-3 inter">Pagar</button>
     </div>
   </aside>
- 
-
 
 -->
