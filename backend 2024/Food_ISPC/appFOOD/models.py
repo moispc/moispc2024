@@ -41,7 +41,8 @@ class Producto(models.Model):
     nombre_producto = models.CharField(max_length=45)  
     descripcion = models.CharField(max_length=45)
     precio = models.FloatField()
-    id_categoria = models.ForeignKey(CategoriaProducto, models.DO_NOTHING)  
+    stock = models.IntegerField( 3, default = 0 )
+    id_categoria = models.ForeignKey(CategoriaProducto, models.DO_NOTHING)
 
     class Meta:
         managed = True
