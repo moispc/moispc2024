@@ -1,4 +1,5 @@
 from django.db import models
+from appUSERS.models import Usuario
 
 # Create your models here.
 
@@ -17,23 +18,6 @@ class CategoriaProducto(models.Model):
     def __str__(self):
         return self.nombre_categoria
 
-class Usuario(models.Model):
-    id_usuario = models.AutoField(primary_key=True)  
-    nombre = models.CharField(max_length=45)  
-    apellido = models.CharField(max_length=45)
-    telefono = models.CharField(max_length=13)
-    isadmin = models.BooleanField()  
-    password = models.CharField(max_length=45)
-
-    class Meta:
-        managed = True
-        db_table = 'usuario'
-        verbose_name = 'Usuario'
-        verbose_name_plural = 'Usuarios'
-    def __unicode__(self):
-        return self.nombre
-    def __str__(self):
-        return self.nombre
     
 class Pedido(models.Model):
     id_pedidos = models.AutoField(primary_key=True)
@@ -57,7 +41,8 @@ class Producto(models.Model):
     nombre_producto = models.CharField(max_length=45)  
     descripcion = models.CharField(max_length=45)
     precio = models.FloatField()
-    id_categoria = models.ForeignKey(CategoriaProducto, models.DO_NOTHING)  
+    stock = models.IntegerField( 3, default = 0 )
+    id_categoria = models.ForeignKey(CategoriaProducto, models.DO_NOTHING)
 
     class Meta:
         managed = True
