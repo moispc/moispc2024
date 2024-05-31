@@ -6,6 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { UserService } from '../../../services/user.service';
+
 @Component({
   selector: 'app-registro',
   standalone: true,
@@ -14,9 +16,9 @@ import {
   styleUrl: './registro.component.css',
 })
 export class RegistroComponent implements OnInit {
-  usuario?: Usuario;
+  usuario: Usuario=new Usuario();
   form: FormGroup;
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.form = this.formBuilder.group({
       nombre: ['', [Validators.required]],
       usuario: [
@@ -58,6 +60,13 @@ export class RegistroComponent implements OnInit {
     event.preventDefault;
     if (this.form.valid) {
       console.log('Formulario válido');
+      console.log(this.form.value);
+      this.usuario = this.form.value;
+      
+  
+      console.log(this.userService.addUser(this.usuario));
+      this.form.reset();
+      
     } else {
       this.form.markAllAsTouched();
       console.log('error en formulario');
