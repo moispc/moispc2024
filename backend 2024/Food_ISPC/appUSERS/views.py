@@ -32,6 +32,6 @@ class LogoutView(APIView):
         try:
             token = Token.objects.get(user=request.user)
             token.delete()
-            return Response({"detail": "Logout Satisfactorio."}, status=status.HTTP_200_OK)
+            return Response({"detalle": "Logout Satisfactorio."}, status=status.HTTP_200_OK)
         except Token.DoesNotExist:
-            return Response({"detail": "Token no encontrado."}, status=status.HTTP_400_BAD_REQUEST)    
+            return Response({"detalle": "Token no encontrado."}, status=status.HTTP_400_BAD_REQUEST)    
