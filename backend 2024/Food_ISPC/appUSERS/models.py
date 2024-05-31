@@ -35,7 +35,6 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(unique=True)  
     apellido = models.CharField(max_length=45)
     telefono = models.CharField(max_length=13)
-    #isadmin = models.BooleanField(default=False)  
     password = models.CharField(max_length=128)
     is_staff = models.BooleanField(default=False)  
     is_active = models.BooleanField(default=True)
