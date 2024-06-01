@@ -3,7 +3,7 @@ import { OnInit } from '@angular/core';
 import { NgFor, CommonModule } from '@angular/common';
 import { Producto } from '../../../app/model/producto.model';
 import { ProductsService } from '../../services/products.service';
-
+import { FormsModule } from '@angular/forms';
 const myModal = document.getElementById('myModal');
 const myInput = document?.getElementById('myInput');
 
@@ -15,36 +15,35 @@ const myInput = document?.getElementById('myInput');
 @Component({
   selector: 'app-carta',
   standalone: true,
-  imports: [NgFor, CommonModule],
+  imports: [NgFor, CommonModule, FormsModule],
   templateUrl: './carta.component.html',
   styleUrl: './carta.component.css',
 })
 export class CartaComponent implements OnInit {
   @Input() public producto: Producto;
   productos: any;
-  
+  cantidadIngresada:number=1;
+  subtotal:number=0;
   constructor(productService: ProductsService) {
     this.producto = {
       id_producto: 0,
       nombre_producto: '',
       image: {},
       precio: 0,
-      descripcion:''
-      
+      descripcion: '',
     };
+    
+
+    
 
     this.productos = productService.getProducts().subscribe({
-      next:(productos)=>{
-        this.productos=productos;
+      next: (productos) => {
+        this.productos = productos;
       },
-      error:(error)=>{
+      error: (error) => {
         console.error(error);
-      }}
-    );
-
-
-
-
+      },
+    });
   }
   ngOnInit(): void {
     // fetchComentarios().then((productos: any[]) => {
@@ -57,10 +56,13 @@ export class CartaComponent implements OnInit {
     this.producto.nombre_producto = producto.nombre_producto;
     this.producto.image = producto.image;
     this.producto.precio = producto.precio;
-   
-    //this.producto.total = producto.price * producto.quantity;
+   this.subtotal=producto.precio;
+    
 
-   
+    // this.producto.total = producto.precio;
   }
 
+  calcularSubtotal(){
+    this.subtotal=this.producto.precio*this.cantidadIngresada
+  }
 }

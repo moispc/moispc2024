@@ -8,7 +8,7 @@ var(--color-cuaternario)
 
 ejemplo:     <color: var(--color-primario);>
 */
-
+@media (max-width: 767.98px) { .border-sm-start-none { border-left: none !important; } }
 body {
   background-color: rgb(90, 90, 90);
 }
@@ -75,7 +75,35 @@ hr {
   font-size: 18px;
 }
 
+#wrapper_box {
+  position: relative;
+ 
+}
 
+#wrapper_box img{
+cursor: pointer;
+overflow: hidden;
+transition: all 1.1s;
+width: 100%;
+height: 100%;
+}
+
+#wrapper_box img:hover{
+  transform: scale(1.05);
+}
+
+#precioNuevo{
+  font-size: 27px;
+}
+
+#nombreProducto{
+  font-size: 32px;
+}
+
+.modal-body img{
+  width: 200px;
+
+}
 
 @media (min-width: 769px) {
   .card-t {
