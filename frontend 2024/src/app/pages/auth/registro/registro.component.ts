@@ -34,7 +34,7 @@ export class RegistroComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(7),
-          Validators.maxLength(10),
+          Validators.maxLength(12),
           Validators.pattern(/^([0-9])*$/),
         ],
       ],
