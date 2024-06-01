@@ -27,24 +27,24 @@
   </div>
 </section> -->
 
- 
-
-<section >
+<section>
   <div class="container py-5">
-    <div class="row justify-content-center mb-3" id="wrapper_box" *ngFor="let product of productos">
+    <div
+      class="row justify-content-center mb-3"
+      id="wrapper_box"
+      *ngFor="let product of productos"
+    >
       <div class="col-md-12 col-xl-10">
         <div class="card shadow-0 border rounded-3">
           <div class="card-body">
             <div class="row">
               <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                  <img src="{{ product.image.imageURL }}"
-                    class="w-100" />
-                  <a href="#!">
-                    <div class="hover-overlay">
-                      <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
-                    </div>
-                  </a>
+                <div class="image-container">
+                  <img src="{{ product.image.imageURL }}"  data-bs-target="#modalImagen"
+                  data-bs-toggle="modal" (click)="cargarModal(product)"
+                   />
+
+                  <div class="mask"></div>
                 </div>
               </div>
               <div class="col-md-6 col-lg-6 col-xl-6">
@@ -73,20 +73,33 @@
                   <span>Casual<br /></span>
                 </div>
                 <p class="text-truncate mb-4 mb-md-0">
-                  {{product.descripcion}}
+                  {{ product.descripcion }}
                 </p>
               </div>
-              
-              <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                <br>
+
+              <div
+                class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start"
+              >
+                <br />
                 <div class="d-flex flex-row align-items-center mb-1">
-                  <h4 class="mb-1 me-1" id="precioNuevo">{{"$ "+product.precio}}</h4>
-                  <span class="text-danger"><s>{{"$ "+product.precio}}</s></span>
+                  <h4 class="mb-1 me-1" id="precioNuevo">
+                    {{ "$ " + product.precio }}
+                  </h4>
+                  <span class="text-danger"
+                    ><s>{{ "$ " + product.precio }}</s></span
+                  >
                 </div>
                 <h6 class="text-success">Disponible</h6>
                 <div class="d-flex flex-column mt-4">
-                  
-                  <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary btn-sm mt-2"  data-bs-target="#modalCompra" data-bs-toggle="modal" (click)="cargarModal(product)" type="button">
+                  <button
+                    data-mdb-button-init
+                    data-mdb-ripple-init
+                    class="btn btn-outline-primary btn-sm mt-2"
+                    data-bs-target="#modalCompra"
+                    data-bs-toggle="modal"
+                    (click)="cargarModal(product)"
+                    type="button"
+                  >
                     Añadir al carrito
                   </button>
                 </div>
@@ -96,57 +109,61 @@
         </div>
       </div>
     </div>
-    </div>
- 
+  </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="modal fade" id="modalCompra" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="modalCompra"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
-     
       <div class="modal-body">
-        <img class="modal-img img-fluid" src="{{producto.image.imageURL}}" alt="" />
-      <h2 class="modal-title">{{producto.nombre_producto}}</h2>
-      <hr />
-      <p class="modal-price">Precio por unidad: ${{producto.precio}}</p>
-      <hr />
-      <div class="input-group ">
-        <span class="input-group-text" id="basic-addon1">Cantidad deseada: </span>
-        <input type="number" class="form-control" [(ngModel)]="cantidadIngresada" (input)="calcularSubtotal()"value="1" min="1" id="cantidad" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="Cantidad deseada">
-        
-      </div>
+        <img
+          class="modal-img img-fluid"
+          id="imagenModalCompra"
+          src="{{ producto.image.imageURL }}"
+          alt=""
+        />
+        <h2 class="modal-title">{{ producto.nombre_producto }}</h2>
+        <hr />
+        <p class="modal-price">Precio por unidad: ${{ producto.precio }}</p>
 
-     
-      <hr />
-      <h3 class="modal-total" id="subtotal">Subtotal: $ {{subtotal}}</h3>
-      <hr />
-      
+        <hr />
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1"
+            >Cantidad deseada:
+          </span>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="cantidadIngresada"
+            (input)="calcularSubtotal()"
+            value="1"
+            min="1"
+            id="cantidad"
+            placeholder="Cantidad"
+            aria-label="Cantidad"
+            aria-describedby="Cantidad deseada"
+          />
+        </div>
+
+        <hr />
+        <h3 class="modal-total" id="subtotal">Subtotal: $ {{ subtotal }}</h3>
+        <hr />
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary confirm-button">Añadir al carrito</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary confirm-button">
+          Añadir al carrito
+        </button>
       </div>
     </div>
   </div>
@@ -192,3 +209,23 @@
   </aside>
 
 -->
+
+<div class="modal fade" id="modalImagen" tabindex="-1" aria-labelledby="modalImagen" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img
+        class="img-fluid"
+        id="imagenModalZoom"
+        src="{{ producto.image.imageURL }}"
+        alt=""
+      />
+      </div>
+      
+    </div>
+  </div>
+</div>
