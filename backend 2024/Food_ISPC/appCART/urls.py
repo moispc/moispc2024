@@ -6,6 +6,5 @@ urlpatterns = [
     path('ver/', VerCarrito.as_view()),
     path('confirmar/', ConfirmarPedido.as_view()),
     path('eliminar/<int:detalle_id>/', EliminarProductoDelCarrito.as_view()),
-    path('vaciar/', VaciarCarrito.as_view()),
 ]
 
