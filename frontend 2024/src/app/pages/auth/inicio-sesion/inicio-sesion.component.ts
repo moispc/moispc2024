@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import {ReactiveFormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+
+// AuthService
+// Router
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -10,32 +15,40 @@ import {ReactiveFormsModule, FormGroup, FormBuilder, Validators} from '@angular/
 })
 export class InicioSesionComponent {
   form!: FormGroup;
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.form = this.formBuilder.group({
-      usuario: ['', [Validators.required], []],
+      email: ['', [Validators.required], []],
       password: ['', [Validators.required, Validators.minLength(8)], []],
     });
   }
   get Password() {
     return this.form.get('password');
   }
-  get Usuario() {
-    return this.form.get('usuario');
+  get Email() {
+    return this.form.get('email');
   }
 
 
 
   onEnviar(event: Event) {
-    console.log(this.form.value);
+    event.preventDefault();
 
-    event.preventDefault;
-
-    if(this.form.valid){
-      alert("Enviar al servidor . . .")
-    }
-    else{
+    if (this.form.valid) {
+      // Llamar al servicio de autenticación
+      this.authService.login(this.Email?.value, this.Password?.value).subscribe(success => {
+        if (success) {
+          // Redirigir al dashboard después de una autenticación exitosa
+          this.router.navigate(['/dashboard']);
+        } else {
+          // Mostrar un mensaje de error o manejar el fallo de autenticación
+          console.error('Email o contraseña incorrectos');
+        }
+      });
+    } else {
       this.form.markAllAsTouched();
     }
   }
-
 }
