@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .models import DetallePedido, Pedido
+from .models import DetallePedido, Pedido, Carrito
 from appFOOD.models import Producto
 
 class AgregarProductoAlCarrito(APIView):
@@ -10,12 +10,14 @@ class AgregarProductoAlCarrito(APIView):
     def post(self, request, producto_id):
         producto = Producto.objects.get(pk=producto_id)
         cantidad = int(request.data.get('cantidad'))
+        id_usuario = int(request.data.get('id_usuario'))
+
         if cantidad > producto.stock:
             return Response({'error': 'Stock insuficiente'}, status=400)
 
-        detalle_pedido, created = DetallePedido.objects.get_or_create(producto=producto, defaults=
-                                                        {'cantidad': cantidad, 'subtotal': producto.precio * cantidad})
-        if not created:
+        detalle_pedido = Carrito.objects.get_or_create(producto_id=producto.id_producto, defaults={'cantidad': cantidad}, usuario_id=id_usuario)
+        
+        if not detalle_pedido:
             detalle_pedido.cantidad += cantidad
             detalle_pedido.subtotal += producto.precio * cantidad
             detalle_pedido.save()
