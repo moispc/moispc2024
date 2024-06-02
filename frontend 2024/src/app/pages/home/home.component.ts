@@ -17,12 +17,6 @@ const fetchComentarios = async () => {
 export class HomeComponent implements OnInit {
   comentarios:any[]=[];
 
-  mostrarCarrito: boolean = false;
-
-  toggleCarrito() {
-    this.mostrarCarrito = !this.mostrarCarrito;
-  }
-
   constructor() {}
 
   ngOnInit(): void {

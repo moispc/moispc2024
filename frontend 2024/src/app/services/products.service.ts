@@ -7,19 +7,19 @@ import { Observable } from 'rxjs';
 })
 export class ProductsService {
 
-  url:string="http://localhost:3000";
+  url:string="http://127.0.0.1:8000/api";
   constructor(private http:HttpClient) { }
 
-  getProducts() {
-    return this.http.get(this.url + '/products');
+  getProducts():Observable<Producto[]> {
+    return this.http.get<Producto[]>(this.url + '/producto');
   }
 
   public addProduct(product:Producto):Observable<Producto> {
-    return this.http.post<Producto>(this.url + '/products', product);
+    return this.http.post<Producto>(this.url + '/producto', product);
   }
 
   public updateProduct(product:Producto):Observable<Producto> {
-    return this.http.put<Producto>(this.url + '/products/' + product.id_producto, product);
+    return this.http.put<Producto>(this.url + '/producto/' + product.id_producto, product);
   }
 
   public deleteProduct(product:Producto):Observable<Producto> {
@@ -27,5 +27,5 @@ export class ProductsService {
   }
 
 
-  
+
 }

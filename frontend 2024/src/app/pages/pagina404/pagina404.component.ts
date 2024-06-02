@@ -2,22 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-exito',
+  selector: 'app-pagina404',
   standalone: true,
   imports: [],
-  templateUrl: './exito.component.html',
-  styleUrl: './exito.component.css'
+  templateUrl: './pagina404.component.html',
+  styleUrl: './pagina404.component.css'
 })
-export class ExitoComponent implements OnInit {
-  contador=30;
+export class Pagina404Component implements OnInit {
+  contador=5;
 constructor(private router:Router){}
- printDiv() {
-    window.print();
-    
-    window.location.href = './home';
-}
-ngOnInit(): void {
-  this.startCountdown();
+
+ngOnInit() {
+ this.startCountdown();
 }
 
 startCountdown(){

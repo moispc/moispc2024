@@ -1,61 +1,63 @@
 <div class="text-center">
   <main class="form-signin">
     <form [formGroup]="form" (ngSubmit)="onEnviar($event)">
-      <h1 class="h4 mb-3 fw-normal text-dark">Inicia sesión para realizar tu pedido</h1>
+      <h1 class="h4 mb-3 fw-normal text-dark">
+        Inicia sesión para realizar tu pedido
+      </h1>
 
       <div class="form-floating">
-        <input type="text" formControlName="usuario" class="form-control">
-        <label for="floatingInput">Usuario</label>
+        <input type="text" formControlName="email" class="form-control">
+        <label for="floatingInput">Email</label>
 
-        @if (Usuario?.errors && Usuario?.touched) {
-        @if (Usuario?.hasError('required'))
+        @if (Email?.errors && Email?.touched) {
+        @if (Email?.hasError('required'))
         {
         <p class="text-danger">
-          El usuario es requerido.
+          El email es requerido.
         </p>
         }
-        @else if (Usuario?.hasError('usuario'))
+        @else if (Email?.hasError('email'))
         {
         <p class="text-danger">
-          El formato del usuario debe ser válido.
+          El formato del email debe ser válido.
         </p>
         }
         }
       </div>
 
       <div class="form-floating">
-        <input type="password" formControlName="password" class="form-control">
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+        />
         <label for="floatingPassword">Password</label>
 
-      @if(Password?.errors && Password?.touched)
-      {
-      @if(Password?.hasError('required'))
-      {
-      <p class="text-danger">
-        El Password es requerido.
-      </p>
-      }
-      @else if (Password?.hasError('minlength') )
-      {
-      <p class="text-danger">
-        El Password requiere como mínimo 8 caracteres.
-      </p>
-      }
-      }
-    </div>
+        @if(Password?.errors && Password?.touched) {
+        @if(Password?.hasError('required')) {
+        <p class="text-danger">El Password es requerido.</p>
+        } @else if (Password?.hasError('minlength') ) {
+        <p class="text-danger">
+          El Password requiere como mínimo 8 caracteres.
+        </p>
+        } }
+      </div>
 
-  <!-- <div class="checkbox mb-3">
+      <!-- <div class="checkbox mb-3">
     <label>
       <input type="checkbox" value="remember-me"> Remember me
     </label>
   </div> -->
 
-
-        <button class="btn btn-info" type="submit" style="--bs-btn-padding-y: .60rem; --bs-btn-padding-x: 8.3em">Iniciar Sesion</button >
+      <button
+        class="btn btn-info"
+        type="submit"
+        style="--bs-btn-padding-y: 0.6rem; --bs-btn-padding-x: 8.3em"
+      >
+        Iniciar Sesion
+      </button>
 
       <!-- <p class="mt-5 mb-3 text-muted">&copy; 2024</p> -->
-
     </form>
   </main>
 </div>
-

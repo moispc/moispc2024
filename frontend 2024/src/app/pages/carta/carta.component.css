@@ -8,60 +8,14 @@ var(--color-cuaternario)
 
 ejemplo:     <color: var(--color-primario);>
 */
-
+@media (max-width: 767.98px) { .border-sm-start-none { border-left: none !important; } }
 body {
   background-color: rgb(90, 90, 90);
 }
 
 .title {
   text-align: center;
-  color: white;
-}
-
-.container-cards {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.card-t {
-  width: 320px;
-  background-size: cover;
-  border-radius: 10px;
-  padding: 5px;
-  margin-bottom: 20px;
-  margin: 20px auto;
-  background-color: rgb(226, 226, 226);
-}
-
-.card-img-t {
-  width: 100%;
-  height: 250px;
-  border-radius: 10px;
-}
-
-.card-info {
-  width: 100%;
-  text-align: center;
-}
-
-.card-info-description {
-  font-size: 15px;
-  color: #3f3f3f;
-}
-
-.card-info--title {
-  font-size: 25px;
-  color: #525252;
-}
-
-.card-info--subTitle {
-  font-size: 20px;
-  color: #595959;
-}
-
-hr {
-  width: 80%;
+  color: var(--color-secundario);;
 }
 
 .card-button {
@@ -75,7 +29,39 @@ hr {
   font-size: 18px;
 }
 
+#wrapper_box img{
+cursor: pointer;
 
+transition: all 1.1s;
+width: 100%;
+height: 100%;
+}
+
+#wrapper_box img:hover{
+  transform: scale(1.05);
+   
+   opacity: 50%; 
+}
+
+.image-container{
+  position: relative;
+}
+
+#precioNuevo{
+  font-size: 27px;
+}
+
+#nombreProducto{
+  font-size: 32px;
+}
+
+#imagenModalCompra{
+  width: 200px;
+
+}
+#imagenModalZoom{
+  width: 600px;
+}
 
 @media (min-width: 769px) {
   .card-t {
@@ -150,20 +136,7 @@ hr {
 
   font-size: 15px;
 }
-
-
-
-
-
-
-
-
-
-
-
 /* shopping cart */
-
-
 .cart-container{
   color: inherit;
 	border: none;
@@ -179,8 +152,6 @@ hr {
   border-radius: 50%;
   cursor: pointer;
   transition: 1s;
-
-
 }
 
 .cart-container.hidden{
@@ -262,4 +233,26 @@ footer{
 #conocenoslink{
   color: #00ADB5;
   font-size: 1rem;
+}
+
+.btn-carrito {
+  position: absolute;
+  top: 120px;
+  left: 20px;
+  z-index: 1;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(62, 156, 62, .7);
+  color: white;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  outline: inherit;
+  transition: 1s;
+}
+
+.logo{
+  display: flex;
+  margin-left: 20px;
 }
