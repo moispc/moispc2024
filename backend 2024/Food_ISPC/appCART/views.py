@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import DetallePedido, Pedido, Carrito
 from appFOOD.models import Producto
+from appUSERS.models import Usuario
+from datetime import date, datetime
+from asgiref.sync import sync_to_async
 
 class AgregarProductoAlCarrito(APIView):
     permission_classes = [IsAuthenticated]
@@ -11,15 +14,57 @@ class AgregarProductoAlCarrito(APIView):
         producto = Producto.objects.get(pk=producto_id)
         cantidad = int(request.data.get('cantidad'))
         id_usuario = int(request.data.get('id_usuario'))
+        direccion = request.data.get('direccion')
+        # usuario = Usuario.objects.get(pk=id_usuario)
+
         
         if cantidad > producto.stock:
             return Response({'error': 'Stock insuficiente'}, status=400)
 
-        detalle_pedido = Carrito.objects.get_or_create(producto_id=producto.id_producto, defaults={'cantidad': cantidad}, usuario_id=id_usuario)
-        if not detalle_pedido:
-            detalle_pedido.cantidad += cantidad
-            detalle_pedido.subtotal += producto.precio * cantidad
-            detalle_pedido.save()
+        current_time = datetime.now().time()
+        pedido, created  = Pedido.objects.get_or_create(id_usuario_id=id_usuario, estado="Pendiente")
+
+        if created:
+            pedido.hora_pedido= current_time
+            pedido.direccion_entrega=direccion
+            pedido.fecha_pedido = date.today()
+            pedido.save()
+
+        carrito, carritoCreated = Carrito.objects.get_or_create(producto_id=producto.id_producto, usuario_id=id_usuario, id_pedido_id=pedido.id_pedidos)
+        if carritoCreated:
+            carrito.cantidad = cantidad
+            carrito.save()
+        else:
+            carrito.cantidad += cantidad
+            carrito.save()
+
+        detallePedido, detalleCreated = DetallePedido.objects.get_or_create( precio_producto=producto.precio, id_pedido_id=pedido.id_pedidos, id_producto_id= producto.id_producto)
+
+        if detalleCreated:
+            detallePedido.cantidad_productos = cantidad
+            detallePedido.subtotal = detallePedido.cantidad_productos * detallePedido.precio_producto
+            detallePedido.save()
+        else:
+            detallePedido.cantidad_productos += cantidad
+            detallePedido.subtotal = detallePedido.cantidad_productos * detallePedido.precio_producto
+            detallePedido.save()
+
+        producto.stock -= cantidad
+        producto.save()
+
+        
+        
+        # if not pedido:
+            
+        #     pedido.hora_pedido= current_time
+        #     pedido.direccion_entrega="Cualquier Dire"
+        #     pedido.estado="Pendiente"
+        #     pedido.fecha_pedido = date.today()
+        #     pedido.save()
+
+
+
+
         return Response({'message': 'Producto agregado al carrito'})
 
 class VerCarrito(APIView):
