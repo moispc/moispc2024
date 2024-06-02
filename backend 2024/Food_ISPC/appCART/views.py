@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import DetallePedido, Pedido, Carrito
 from appFOOD.models import Producto
 from datetime import date, datetime
+from .serializers import DetallePedidoSerializer
 from asgiref.sync import sync_to_async
 from appUSERS.models import Usuario
 
@@ -15,7 +16,6 @@ class AgregarProductoAlCarrito(APIView):
         cantidad = int(request.data.get('cantidad'))
         id_usuario = int(request.data.get('id_usuario'))
         direccion = request.data.get('direccion')
-
         
         if cantidad > producto.stock:
             return Response({'error': 'Stock insuficiente'}, status=400)
@@ -59,11 +59,16 @@ class VerCarrito(APIView):
         usuario = request.user
         id_usuario = usuario.id_usuario
 
-        #detalles_carrito = Carrito.objects.filter(usuario_id=id_usuario)
-        #carrito_data = [{'producto': detalle.producto.nombre_producto, 'cantidad': detalle.cantidad} for detalle in detalles_carrito]
-        detalle_carrito = Producto.objects.prefetch_related("carrito_producto").all()
+        detalles_carrito = Carrito.objects.select_related("id_pedido").all().filter(usuario_id=id_usuario)
+        carrito_data = [
+            {
+                'producto': detalle.producto.nombre_producto,
+                'cantidad': detalle.cantidad,
+                "precio": detalle.producto.precio,
+                "imageURL": detalle.producto.imageURL
+            } for detalle in detalles_carrito]
 
-        return Response({'carrito': detalle_carrito})
+        return Response({'carrito': carrito_data})
 
 class ConfirmarPedido(APIView):
     permission_classes = [IsAuthenticated]
@@ -100,3 +105,20 @@ class EliminarProductoDelCarrito(APIView):
         producto.save()
         carrito_item.delete()
         return Response({'message': 'Producto eliminado del carrito'})
+
+class VerDashboard(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, id_usuario):
+        vistaPedidos = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario)
+
+        carrito_data = [
+            {
+                "fecha_pedido": pedido.fecha_pedido,
+                "direccion_entrega": pedido.direccion_entrega,
+                "estado":pedido.estado,
+                "detalles": DetallePedidoSerializer(pedido.detalles.all(), many=True).data
+                } 
+                        for pedido in vistaPedidos]
+
+        return Response( { "results": carrito_data} )

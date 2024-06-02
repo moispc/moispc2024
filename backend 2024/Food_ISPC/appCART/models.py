@@ -32,7 +32,7 @@ class Carrito(models.Model):
     
 class DetallePedido(models.Model):
     id_detalle = models.AutoField(primary_key=True)  
-    id_pedido = models.ForeignKey(Pedido, models.DO_NOTHING)  
+    id_pedido = models.ForeignKey(Pedido, models.DO_NOTHING, related_name='detalles')  
     id_producto = models.ForeignKey(Producto, models.DO_NOTHING)  
     cantidad_productos = models.IntegerField(null=True)  
     precio_producto = models.FloatField()
