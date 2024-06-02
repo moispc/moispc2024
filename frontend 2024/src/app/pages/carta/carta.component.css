@@ -1,4 +1,3 @@
-
 /* estilo global para los colores de la página
 hay 4 colores para mantener el estilo global de la página. El modo de usarlos es:
 var(--color-primario)
@@ -8,16 +7,19 @@ var(--color-cuaternario)
 
 ejemplo:     <color: var(--color-primario);>
 */
-@media (max-width: 767.98px) { .border-sm-start-none { border-left: none !important; } }
+@media (max-width: 767.98px) {
+  .border-sm-start-none {
+    border-left: none !important;
+  }
+}
 body {
   background-color: rgb(90, 90, 90);
 }
 
 .title {
   text-align: center;
-  color: var(--color-secundario);;
+  color: var(--color-secundario);
 }
-
 
 .card-button {
   width: 70%;
@@ -30,40 +32,36 @@ body {
   font-size: 18px;
 }
 
+#wrapper_box img {
+  cursor: pointer;
 
-
-#wrapper_box img{
-cursor: pointer;
-
-transition: all 1.1s;
-width: 100%;
-height: 100%;
+  transition: all 1.1s;
+  width: 100%;
+  height: 100%;
 }
 
-#wrapper_box img:hover{
+#wrapper_box img:hover {
   transform: scale(1.05);
-   
-   opacity: 50%; 
+
+  opacity: 50%;
 }
 
-.image-container{
+.image-container {
   position: relative;
 }
 
-
-#precioNuevo{
+#precioNuevo {
   font-size: 27px;
 }
 
-#nombreProducto{
+#nombreProducto {
   font-size: 32px;
 }
 
-#imagenModalCompra{
+#imagenModalCompra {
   width: 200px;
-
 }
-#imagenModalZoom{
+#imagenModalZoom {
   width: 600px;
 }
 
@@ -141,27 +139,15 @@ height: 100%;
   font-size: 15px;
 }
 
-
-
-
-
-
-
-
-
-
-
 /* shopping cart */
-
-
-.cart-container{
+.cart-container {
   color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	outline: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
 
-  background-color: rgb(62, 156, 62, .7);
+  background-color: rgb(62, 156, 62, 0.7);
   width: 50px;
   height: 50px;
   margin-top: 50px;
@@ -169,87 +155,83 @@ height: 100%;
   border-radius: 50%;
   cursor: pointer;
   transition: 1s;
-
-
 }
 
-.cart-container.hidden{
+.cart-container.hidden {
   transform: translate(-500%);
 }
 
-.cart-container:hover{
+.cart-container:hover {
   box-shadow: 0 0 10px 5px rgba(10, 207, 37, 0.5);
 }
 
-.shopping-cart{
+.shopping-cart {
   font-size: 2rem;
 }
 
-.sidebar{
+.sidebar {
   height: 100vh;
   width: 300px;
   background-color: var(--color-secundario);
   z-index: 1;
   transition: 1s;
   box-shadow: 0 0 10px 5px rgba(10, 10, 10, 0.5);
-
 }
 
-.sidebar.hidden{
+.sidebar.hidden {
   transform: translate(-500%);
 }
 
-ul.shop-list{
+ul.shop-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-li.product-card{
-  -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+li.product-card {
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
   /* height: 120px; */
-
 }
 
-.delete-item{
+.delete-item {
   border-radius: 50%;
   bottom: 2px;
   right: 2px;
 }
 
-.delete-item:hover{
+.delete-item:hover {
   color: red;
 }
 
-.product-title{
+.product-title {
   height: 45px;
 }
 
-.btn-pay{
+.btn-pay {
   background-color: var(--color-terciario);
   color: var(--color-primario);
 }
 
-.btn-pay:hover{
+.btn-pay:hover {
   background-color: var(--color-cuaternario);
   color: var(--color-primario);
 }
 
-footer{
+footer {
   padding-top: 20px;
   margin-top: 20px;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
-  background-color:#00acb561;
+  font-family: "Roboto", sans-serif;
+  background-color: #00acb561;
 }
 
 #lista {
   font-size: 2rem;
 }
 
-#conocenoslink{
-  color: #00ADB5;
+#conocenoslink {
+  color: #00adb5;
   font-size: 1rem;
 }
