@@ -36,8 +36,8 @@ export class AuthService {
     localStorage.removeItem('idUser');
   }
 
-  isAuthenticated(): boolean {
+  isAuthenticated(): Observable<boolean> {
     // Verificar si el email está autenticado
-    return !!localStorage.getItem('authToken');
+    return of(!!localStorage.getItem('authToken'));
   }
 }

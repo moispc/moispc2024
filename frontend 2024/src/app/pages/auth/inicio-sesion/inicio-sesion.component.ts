@@ -41,7 +41,7 @@ export class InicioSesionComponent {
       this.authService.login(this.Email?.value, this.Password?.value).subscribe(success => {
         if (success) {
           // Redirigir al dashboard después de una autenticación exitosa
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         } else {
           // Mostrar un mensaje de error o manejar el fallo de autenticación
           console.error('Email o contraseña incorrectos');
