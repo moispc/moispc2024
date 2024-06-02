@@ -9,6 +9,7 @@ import { ExitoComponent } from './pages/exito/exito.component';
 import { NosotrosDevsComponent } from './pages/nosotros-devs/nosotros-devs.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { InicioSesionComponent } from './pages/auth/inicio-sesion/inicio-sesion.component';
+import { authGuard } from './services/guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -17,7 +18,7 @@ export const routes: Routes = [
     {path:"carta", component:CartaComponent},
     {path:"carrito", component:CarritoComponent},
     {path:"pagar", component:CheckoutComponent},
-    {path:"dashboard", component:DashboardComponent},
+    {path:"dashboard", component:DashboardComponent, canActivate:[authGuard]},
     {path:"registro", component:RegistroComponent},
     {path:"exito", component:ExitoComponent},
     {path:"login", component:InicioSesionComponent},

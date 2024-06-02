@@ -4,20 +4,20 @@
       <h1 class="h4 mb-3 fw-normal text-dark">Inicia sesión para realizar tu pedido</h1>
 
       <div class="form-floating">
-        <input type="text" formControlName="usuario" class="form-control">
-        <label for="floatingInput">Usuario</label>
+        <input type="text" formControlName="email" class="form-control">
+        <label for="floatingInput">Email</label>
 
-        @if (Usuario?.errors && Usuario?.touched) {
-        @if (Usuario?.hasError('required'))
+        @if (Email?.errors && Email?.touched) {
+        @if (Email?.hasError('required'))
         {
         <p class="text-danger">
-          El usuario es requerido.
+          El email es requerido.
         </p>
         }
-        @else if (Usuario?.hasError('usuario'))
+        @else if (Email?.hasError('email'))
         {
         <p class="text-danger">
-          El formato del usuario debe ser válido.
+          El formato del email debe ser válido.
         </p>
         }
         }
