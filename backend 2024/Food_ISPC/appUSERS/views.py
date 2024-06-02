@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 
+# Create your views here.
 
 
 class CreateUsuarioView(generics.CreateAPIView):
@@ -29,16 +30,20 @@ class CreateTokenView(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         
-        
+       
         Token.objects.filter(user=user).delete()
         
-        
+       
         token, created = Token.objects.get_or_create(user=user)
         
+        
         return Response({
-            'token': token.key,
+            'email': user.email,
             'user_id': user.pk,
-            'email': user.email
+            'token': token.key,
+            'nombre': user.nombre,
+            'apellido': user.apellido,  
+            'telefono': user.telefono,
         }, status=status.HTTP_200_OK)
 
 class LogoutView(APIView):
