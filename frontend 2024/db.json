@@ -1,4 +1,5 @@
-{"products":[
+{
+  "products": [
     {
       "id": "QNFTNGQ",
       "image": {
@@ -38,7 +39,6 @@
         "imageURL": "assets/carta/hamburguesa.webp",
         "imageAlt": "Hamburguesa.",
         "thumbnail": "assets/carta/hamburguesa_thumbnail.webp"
-
       },
       "nombre_producto": "Hamburguesa",
       "descripcion": "Burger, tomate, lechuga, cebolla morada, morrón, queso, chimi y mayonesa casera.",
@@ -50,13 +50,13 @@
         "imageURL": "assets/carta/lomito.webp",
         "imageAlt": "Lomito.",
         "thumbnail": "assets/carta/lomito_thumbnail.webp"
-      },      
+      },
       "nombre_producto": "Lomito",
       "descripcion": "Bife de lomo, tomate, lechuga, jamón, queso, huevo y mayonesa casera.",
       "precio": 4500
     }
   ],
-  "comentarios":[
+  "comentarios": [
     {
       "nombre": "Usuario1",
       "fecha": "2023-09-13",
@@ -87,10 +87,10 @@
       "calificacion": 5,
       "comentario": "'¡Me encanta porque están bien cocidas y la demora no es mucha'"
     }
-],
-"infoDevelopers":[
+  ],
+  "infoDevelopers": [
     {
-      "id":"85XB5Y",
+      "id": "85XB5Y",
       "name": "Verónica Lúdemann",
       "img": "assets/developers/vero.webp",
       "linkedin": "http://www.linkedin.com/in/veronica-ludemann",
@@ -98,7 +98,7 @@
       "portfolio": ""
     },
     {
-      "id":"8F33UL",
+      "id": "8F33UL",
       "name": "Tiziano Mina",
       "img": "assets/developers/tizi.webp",
       "linkedin": "https://www.linkedin.com/in/tiziano-mina/",
@@ -106,7 +106,7 @@
       "portfolio": "https://tiziano-mina.netlify.app/"
     },
     {
-      "id":"3JS2P1",
+      "id": "3JS2P1",
       "name": "Gisele Lavisse",
       "img": "assets/developers/gi.webp",
       "linkedin": "https://www.linkedin.com/in/gisele-lavisse-934540246/",
@@ -114,7 +114,7 @@
       "portfolio": ""
     },
     {
-      "id":"RUC42Y",
+      "id": "RUC42Y",
       "name": "Rocio Garzón",
       "img": "assets/developers/ro.webp",
       "linkedin": "",
@@ -122,7 +122,7 @@
       "portfolio": ""
     },
     {
-      "id":"A8O3KO",
+      "id": "A8O3KO",
       "name": "Nicolás Luna",
       "img": "assets/developers/nico.webp",
       "linkedin": "https://www.linkedin.com/in/nicolas-luna-632612106/",
@@ -130,7 +130,7 @@
       "portfolio": ""
     },
     {
-      "id":"LUW6LM",
+      "id": "LUW6LM",
       "name": "Javier Garcia",
       "img": "assets/developers/javi.webp",
       "linkedin": "https://www.linkedin.com/in/garcialuisjavier/",
@@ -138,7 +138,7 @@
       "portfolio": ""
     },
     {
-      "id":"SZWGR4",
+      "id": "SZWGR4",
       "name": "Diego Guzmán",
       "img": "assets/developers/die.webp",
       "linkedin": "https://www.linkedin.com/in/diego-guzm%C3%A1n-cerveux/",
@@ -146,12 +146,29 @@
       "portfolio": "https://cerveux.dev.ar/"
     },
     {
-     " id":"IVRK6C",
+      " id": "IVRK6C",
       "name": "Jimena Galleguillo",
       "img": "assets/developers/jime.webp",
       "linkedin": "",
       "github": "https://github.com/Jimenna",
       "portfolio": ""
+    }
+  ],
+  "users": [
+    {
+      "nombre": "Cristian",
+      "mail": "kronomio_cl87@htmail.com",
+      "telefono": "3541653254",
+      "password": "Cris2609",
+      "id_usuario": "kronomio"
+    },
+    {
+      "id": "7c6e",
+      "nombre": "Cristian2",
+      "mail": "kronomio_cl87@htmail.com",
+      "telefono": "3541653254",
+      "password": "Cris2609",
+      "id_usuario": "kronomio"
     }
   ]
 }
