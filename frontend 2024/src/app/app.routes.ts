@@ -10,6 +10,7 @@ import { NosotrosDevsComponent } from './pages/nosotros-devs/nosotros-devs.compo
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { InicioSesionComponent } from './pages/auth/inicio-sesion/inicio-sesion.component';
 import { Pagina404Component } from './pages/pagina404/pagina404.component';
+import { ExitoNuevoUsuarioComponent } from './pages/auth/exito-nuevo-usuario/exito-nuevo-usuario.component';
 
 
 export const routes: Routes = [
@@ -22,9 +23,11 @@ export const routes: Routes = [
     {path:"registro", component:RegistroComponent},
     {path:"exito", component:ExitoComponent},
     {path:"login", component:InicioSesionComponent},
+    {path:'exitoNuevo', component:ExitoNuevoUsuarioComponent},
     {path:"quienes-somos", component:NosotrosDevsComponent},
     {path:"contacto", component:ContactoComponent},
     {path:'**', component:Pagina404Component},
+   
 
 
 ];
