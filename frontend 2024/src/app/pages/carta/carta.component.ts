@@ -28,7 +28,7 @@ export class CartaComponent implements OnInit {
     this.producto = {
       id_producto: 0,
       nombre_producto: '',
-      image: {},
+      imageURL: {},
       precio: 0,
       descripcion: '',
     };
@@ -54,7 +54,7 @@ export class CartaComponent implements OnInit {
 
   cargarModal(producto: Producto) {
     this.producto.nombre_producto = producto.nombre_producto;
-    this.producto.image = producto.image;
+    this.producto.imageURL = producto.imageURL;
     this.producto.precio = producto.precio;
    this.subtotal=producto.precio;
     
