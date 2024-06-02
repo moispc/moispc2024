@@ -3,18 +3,13 @@ from appUSERS.models import Usuario
 from appFOOD.models import Producto
 from django.conf import settings
 
-class Carrito(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField(default=1)
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
-
-
 class Pedido(models.Model):
     id_pedidos = models.AutoField(primary_key=True)
     id_usuario = models.ForeignKey(Usuario, models.DO_NOTHING)
-    fecha_pedido = models.DateField()  
-    hora_pedido = models.TimeField()  
-    direccion_entrega = models.CharField(max_length=100)  
+    fecha_pedido = models.DateField(null=True)  
+    hora_pedido = models.TimeField(null=True)  
+    direccion_entrega = models.CharField(max_length=100, null=True)
+    estado = models.CharField(max_length=50, default='pendiente', null=True)  
 
     class Meta:
         managed = True
@@ -26,12 +21,25 @@ class Pedido(models.Model):
     def __str__(self):
         return self.id_pedidos 
     
+
+
+
+class Carrito(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    comprado = models.BooleanField(default=False)
+    id_pedido = models.ForeignKey(Pedido, models.DO_NOTHING, default=1)
+    class Meta:
+        db_table = 'carrito'
+    
 class DetallePedido(models.Model):
     id_detalle = models.AutoField(primary_key=True)  
     id_pedido = models.ForeignKey(Pedido, models.DO_NOTHING)  
     id_producto = models.ForeignKey(Producto, models.DO_NOTHING)  
-    cantidad_productos = models.IntegerField()  
-    precio_producto = models.FloatField()  
+    cantidad_productos = models.IntegerField(null=True)  
+    precio_producto = models.FloatField()
+    subtotal = models.FloatField(null=True)  
     class Meta:
         managed = True
         db_table = 'detalle_pedido'

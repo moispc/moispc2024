@@ -23,7 +23,28 @@ class RetrieveUpdateUsuarioView(generics.RetrieveUpdateAPIView):
         return self.request.user
     
 class CreateTokenView(ObtainAuthToken):
-    serializer_class = AuthTokenSerializer 
+    serializer_class = AuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        
+       
+        Token.objects.filter(user=user).delete()
+        
+       
+        token, created = Token.objects.get_or_create(user=user)
+        
+        
+        return Response({
+            'email': user.email,
+            'user_id': user.pk,
+            'token': token.key,
+            'nombre': user.nombre,
+            'apellido': user.apellido,  
+            'telefono': user.telefono,
+        }, status=status.HTTP_200_OK)
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
