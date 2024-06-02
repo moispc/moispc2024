@@ -14,7 +14,7 @@ export class NavComponent implements OnInit {
   estaAutenticado=false;
 
   constructor(private authservice:AuthService) {
-    
+
   }
   ngOnInit(): void {
     this.authservice.isAuthenticated().subscribe({
@@ -23,12 +23,13 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('idUser')
-    this.estaAutenticado = false;
+    this.authservice.logout();
+    // localStorage.removeItem('authToken');
+    // localStorage.removeItem('idUser')
+    // this.estaAutenticado = false;
   }
 
-  refreshPage() {
-    window.location.reload();
-  }
+  // refreshPage() {
+  //   window.location.reload();
+  // }
 }
