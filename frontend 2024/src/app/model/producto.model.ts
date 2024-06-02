@@ -4,5 +4,6 @@ export class Producto{
     imageURL:any="";
     precio:number=0; 
     descripcion:string="";
-    
+    id_categoria:number=0;
+    stock:number=0;
 }
