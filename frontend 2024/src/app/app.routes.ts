@@ -9,12 +9,9 @@ import { ExitoComponent } from './pages/exito/exito.component';
 import { NosotrosDevsComponent } from './pages/nosotros-devs/nosotros-devs.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { InicioSesionComponent } from './pages/auth/inicio-sesion/inicio-sesion.component';
-<<<<<<< HEAD
 import { authGuard } from './services/guards/auth.guard';
-=======
 import { Pagina404Component } from './pages/pagina404/pagina404.component';
 import { ExitoNuevoUsuarioComponent } from './pages/auth/exito-nuevo-usuario/exito-nuevo-usuario.component';
->>>>>>> 7e6857c392fbc85a67870112ef1333501036d903
 
 
 export const routes: Routes = [
@@ -31,7 +28,7 @@ export const routes: Routes = [
     {path:"quienes-somos", component:NosotrosDevsComponent},
     {path:"contacto", component:ContactoComponent},
     {path:'**', component:Pagina404Component},
-   
+
 
 
 ];
