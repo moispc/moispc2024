@@ -6,7 +6,10 @@ from django.conf import settings
 class Carrito(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1)
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    comprado = models.BooleanField(default=False)
+    class Meta:
+        db_table = 'carrito'
 
 
 class Pedido(models.Model):
@@ -14,7 +17,8 @@ class Pedido(models.Model):
     id_usuario = models.ForeignKey(Usuario, models.DO_NOTHING)
     fecha_pedido = models.DateField()  
     hora_pedido = models.TimeField()  
-    direccion_entrega = models.CharField(max_length=100)  
+    direccion_entrega = models.CharField(max_length=100)
+    estado = models.CharField(max_length=50, default='pendiente')  
 
     class Meta:
         managed = True
@@ -31,7 +35,8 @@ class DetallePedido(models.Model):
     id_pedido = models.ForeignKey(Pedido, models.DO_NOTHING)  
     id_producto = models.ForeignKey(Producto, models.DO_NOTHING)  
     cantidad_productos = models.IntegerField()  
-    precio_producto = models.FloatField()  
+    precio_producto = models.FloatField()
+    subtotal = models.FloatField()  
     class Meta:
         managed = True
         db_table = 'detalle_pedido'
