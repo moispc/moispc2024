@@ -5,6 +5,7 @@ from .models import DetallePedido, Pedido, Carrito
 from appFOOD.models import Producto
 from appUSERS.models import Usuario
 from datetime import date, datetime
+from .serializers import DetallePedidoSerializer
 from asgiref.sync import sync_to_async
 
 class AgregarProductoAlCarrito(APIView):
@@ -15,7 +16,7 @@ class AgregarProductoAlCarrito(APIView):
         cantidad = int(request.data.get('cantidad'))
         id_usuario = int(request.data.get('id_usuario'))
         direccion = request.data.get('direccion')
-        # usuario = Usuario.objects.get(pk=id_usuario)
+        usuario = Usuario.objects.get(pk=id_usuario)
 
         
         if cantidad > producto.stock:
@@ -106,14 +107,21 @@ class EliminarProductoDelCarrito(APIView):
         detalle.delete()
         return Response({'message': 'Producto eliminado del carrito'})
 
-class VaciarCarrito(APIView):
+class VerDashboard(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        detalles_carrito = DetallePedido.objects.all()
-        for detalle in detalles_carrito:
-            producto = detalle.producto
-            producto.stock += detalle.cantidad
-            producto.save()
-        detalles_carrito.delete()
-        return Response({'message': 'Carrito vaciado'})
+    def post(self, request, id_usuario):
+        # vistaPedidos = Pedido.objects.all()
+        vistaPedidos = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario)
+
+        carrito_data = [
+            {
+                "fecha_pedido": pedido.fecha_pedido,
+                "direccion_entrega": pedido.direccion_entrega,
+                "estado":pedido.estado,
+                "detalles": DetallePedidoSerializer(pedido.detalles.all(), many=True).data
+                } 
+                        for pedido in vistaPedidos]
+
+        return Response( { "results": carrito_data} )
+
