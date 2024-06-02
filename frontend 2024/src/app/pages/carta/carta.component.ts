@@ -6,6 +6,7 @@ import { ProductsService } from '../../services/products.service';
 import { FormsModule } from '@angular/forms';
 import { PedidosService } from '../../services/pedidos.service';
 import { DetallePedido } from '../../model/detallePedido.model';
+import { CarritoComponent } from '../carrito/carrito.component';
 const myModal = document.getElementById('myModal');
 const myInput = document?.getElementById('myInput');
 
@@ -17,7 +18,7 @@ const myInput = document?.getElementById('myInput');
 @Component({
   selector: 'app-carta',
   standalone: true,
-  imports: [NgFor, CommonModule, FormsModule],
+  imports: [NgFor, CommonModule, FormsModule, CarritoComponent],
   templateUrl: './carta.component.html',
   styleUrl: './carta.component.css',
 })
@@ -72,11 +73,17 @@ export class CartaComponent implements OnInit {
     this.pedidoService.agregarProducto(detallePedido).subscribe({
       next: () => {
         alert("Producto añadido correctamente");
+        this.mostrarCarrito;
       },
       error: (error) => {
         console.error(error);
       },
     });
     
+  }
+
+  mostrarCarrito: boolean = false;
+  toggleCarrito() {
+    this.mostrarCarrito = !this.mostrarCarrito;
   }
 }

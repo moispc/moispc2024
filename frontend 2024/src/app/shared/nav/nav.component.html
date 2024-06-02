@@ -45,6 +45,11 @@
               <li class="nav-item text-center ">
                 <a class="nav-link" routerLink="/carta"> Carta </a>
               </li>
+              <li *ngIf="estaAutenticado" class="nav-item text-center ">
+                <a class="nav-link" routerLink="/dashboard">
+                  Dashboard
+                </a>
+              </li>
               <li *ngIf="!estaAutenticado" class="nav-item text-center">
                 <a
                   class="btn btn-outline-light m-1 "
@@ -66,7 +71,7 @@
               <li *ngIf="estaAutenticado" class="nav-item text-center">
                 <a
                   class="btn btn-outline-light m-1 "
-                  id="nav-logout"
+                  id="nav-logout" (click)="logout()"
                 >
                   Log Out
                 </a>

@@ -23,4 +23,10 @@ export class CarritoComponent {
       imagenUrl: './assets/carta/j&q_thumbnail.webp' 
     }
   ];
+
+  sidebarVisible: boolean = true;
+
+  cerrarSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
 }

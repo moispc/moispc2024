@@ -1,31 +1,10 @@
 <h1 class="title">Conoce nuestra variedad de comidas.</h1>
 
-<!-- <section class="container-cards container">
-  
-  <div class="card-t" *ngFor="let product of productos">
-    <div class="card-info">
-      <div class="row">
-        <div class="col-md-4">
-          <img
-            src="{{ product.image.imageURL }}"
-            class="card-img my-auto"
-            alt="{{ product.image.imageAlt }}"
-          />
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-info--title mb-5">{{ product.nombre_producto }}</h5>
-            <p class="card-info-description">{{ product.descripcion }}</p>
-            <p class="card-text">
-              <small class="text-body-emphasis">{{"$ "+product.precio}}</small>
-            </p>
-            <button class="btn btn-primary card-button mt-3"  data-bs-target="#modalCompra" data-bs-toggle="modal" (click)="cargarModal(product)">Comprar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
+<button class="btn-carrito" aria-label="mostrar carrito de compras" (click)="toggleCarrito()">
+  <!-- <img src="./assets/icons/cart-icon.svg" alt="Icono de carrito de compras"> -->
+</button>
+
+<app-carrito *ngIf="mostrarCarrito"></app-carrito>
 
 <section>
   <div class="container py-5">

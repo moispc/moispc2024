@@ -13,13 +13,16 @@ export class PedidosService {
   constructor(private http:HttpClient) { }
 
   getPedidos() {
-    return this.http.get(this.url + '/pedidos');
+    return this.http.get(this.url + 'pedidos');
   }
+
+  // getDetallePedido():Observable <DetallePedido> {
+  //   this.http.get(this.url + 'pedidos')
+  // }
 
   public agregarProducto(product:DetallePedido):Observable<any> {
     const headers=new HttpHeaders({
-      //'Authorization': 'Token '+localStorage.getItem('token')
-      'Authorization': 'Token '+'7cddf92f74d2168863f8fb33bc3e37c288e2bacd'
+      'Authorization': 'Token '+localStorage.getItem('authToken')
     })
    
     return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product ,{ headers} );
