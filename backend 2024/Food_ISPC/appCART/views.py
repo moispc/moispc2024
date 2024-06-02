@@ -109,7 +109,7 @@ class EliminarProductoDelCarrito(APIView):
 class VerDashboard(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, id_usuario):
+    def get(self, request, id_usuario):
         vistaPedidos = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario)
 
         carrito_data = [
