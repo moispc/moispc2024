@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -8,7 +8,8 @@ import { DetallePedido } from '../model/detallePedido.model';
 })
 export class PedidosService {
 
-  url:string="http://127.0.0.1:8000/api";
+  url:string="http://127.0.0.1:8000/appCART/";
+  
   constructor(private http:HttpClient) { }
 
   getPedidos() {
@@ -16,7 +17,12 @@ export class PedidosService {
   }
 
   public agregarProducto(product:DetallePedido):Observable<any> {
-    return this.http.post(this.url + '/agregar/'+ product.idProducto, product);
+    const headers=new HttpHeaders({
+      //'Authorization': 'Token '+localStorage.getItem('token')
+      'Authorization': 'Token '+'7cddf92f74d2168863f8fb33bc3e37c288e2bacd'
+    })
+   
+    return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product ,{ headers} );
   }
 
   // public updatePedido(product:Pedido):Observable<Pedido> {

@@ -10,8 +10,8 @@ export class ProductsService {
   url:string="http://127.0.0.1:8000/api";
   constructor(private http:HttpClient) { }
 
-  getProducts() {
-    return this.http.get(this.url + '/producto');
+  getProducts():Observable<Producto[]> {
+    return this.http.get<Producto[]>(this.url + '/producto');
   }
 
   public addProduct(product:Producto):Observable<Producto> {

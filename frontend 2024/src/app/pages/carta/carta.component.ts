@@ -23,7 +23,7 @@ const myInput = document?.getElementById('myInput');
 })
 export class CartaComponent implements OnInit {
   @Input() public producto: Producto;
-  productos: any;
+  productos: Producto[]=[];
   cantidadIngresada:number=1;
   subtotal:number=0;
   
@@ -34,13 +34,15 @@ export class CartaComponent implements OnInit {
       imageURL: {},
       precio: 0,
       descripcion: '',
+      stock:0,
+      id_categoria:0
     };
     
 
     
 
-    this.productos = productService.getProducts().subscribe({
-      next: (productos) => {
+     productService.getProducts().subscribe({
+      next: (productos:Producto[]) => {
         this.productos = productos;
       },
       error: (error) => {
@@ -49,17 +51,13 @@ export class CartaComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    // fetchComentarios().then((productos: any[]) => {
-    //   this.productos = productos;
-    //   console.log(this.productos);
-    // });
+ 
   }
 
   cargarModal(producto: Producto) {
-    this.producto.nombre_producto = producto.nombre_producto;
-    this.producto.imageURL = producto.imageURL;
-    this.producto.precio = producto.precio;
-   this.subtotal=producto.precio;
+    
+    this.producto=producto;
+    
     
 
     // this.producto.total = producto.precio;
@@ -70,10 +68,10 @@ export class CartaComponent implements OnInit {
   }
 
   addProducto(){
-   const detallePedido = new DetallePedido(0, this.producto.id_producto, this.cantidadIngresada)
+   const detallePedido = new DetallePedido(1,0, this.producto.id_producto, this.cantidadIngresada,'Gerónico 1257')
     this.pedidoService.agregarProducto(detallePedido).subscribe({
       next: () => {
-        console.log("Se añadió correctamente");
+        alert("Producto añadido correctamente");
       },
       error: (error) => {
         console.error(error);
