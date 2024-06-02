@@ -16,10 +16,6 @@ class AgregarProductoAlCarrito(APIView):
         cantidad = int(request.data.get('cantidad'))
         id_usuario = int(request.data.get('id_usuario'))
         direccion = request.data.get('direccion')
-
-        # usuario = Usuario.objects.get(pk=id_usuario)
-
-
         
         if cantidad > producto.stock:
             return Response({'error': 'Stock insuficiente'}, status=400)
@@ -63,11 +59,16 @@ class VerCarrito(APIView):
         usuario = request.user
         id_usuario = usuario.id_usuario
 
-        #detalles_carrito = Carrito.objects.filter(usuario_id=id_usuario)
-        #carrito_data = [{'producto': detalle.producto.nombre_producto, 'cantidad': detalle.cantidad} for detalle in detalles_carrito]
-        detalle_carrito = Producto.objects.prefetch_related("carrito_producto").all()
+        detalles_carrito = Carrito.objects.select_related("id_pedido").all().filter(usuario_id=id_usuario)
+        carrito_data = [
+            {
+                'producto': detalle.producto.nombre_producto,
+                'cantidad': detalle.cantidad,
+                "precio": detalle.producto.precio,
+                "imageURL": detalle.producto.imageURL
+            } for detalle in detalles_carrito]
 
-        return Response({'carrito': detalle_carrito})
+        return Response({'carrito': carrito_data})
 
 class ConfirmarPedido(APIView):
     permission_classes = [IsAuthenticated]
@@ -109,7 +110,6 @@ class VerDashboard(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, id_usuario):
-        # vistaPedidos = Pedido.objects.all()
         vistaPedidos = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario)
 
         carrito_data = [
