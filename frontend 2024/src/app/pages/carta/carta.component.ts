@@ -4,6 +4,8 @@ import { NgFor, CommonModule } from '@angular/common';
 import { Producto } from '../../../app/model/producto.model';
 import { ProductsService } from '../../services/products.service';
 import { FormsModule } from '@angular/forms';
+import { PedidosService } from '../../services/pedidos.service';
+import { DetallePedido } from '../../model/detallePedido.model';
 const myModal = document.getElementById('myModal');
 const myInput = document?.getElementById('myInput');
 
@@ -24,7 +26,8 @@ export class CartaComponent implements OnInit {
   productos: any;
   cantidadIngresada:number=1;
   subtotal:number=0;
-  constructor(productService: ProductsService) {
+  
+  constructor(private productService: ProductsService, private pedidoService:PedidosService) {
     this.producto = {
       id_producto: 0,
       nombre_producto: '',
@@ -64,5 +67,18 @@ export class CartaComponent implements OnInit {
 
   calcularSubtotal(){
     this.subtotal=this.producto.precio*this.cantidadIngresada
+  }
+
+  addProducto(){
+   const detallePedido = new DetallePedido(0, this.producto.id_producto, this.cantidadIngresada)
+    this.pedidoService.agregarProducto(detallePedido).subscribe({
+      next: () => {
+        console.log("Se añadió correctamente");
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+    
   }
 }
