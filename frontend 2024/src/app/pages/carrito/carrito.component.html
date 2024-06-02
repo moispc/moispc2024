@@ -1,18 +1,19 @@
-<aside class=" ">
+<aside [class.collapsed]="!sidebarVisible" class="cart-aside">
     <div class="sidebar p-2 d-flex flex-column fixed-top">
-        <button type="button" class="btn-close colapse-sidebar ms-auto mb-5" aria-label="Close"></button>
+        <button type="button" class="btn-close colapse-sidebar ms-auto mb-5" aria-label="Close" (click)="cerrarSidebar()"></button>
         <div class="sidebar-items">
             <ul class="shop-list" style="list-style-type: none;">
                 <li class="product-card bg-light position-relative rounded rounded-2 my-2" *ngFor="let producto of productos">
                     <div class="card-content row">
-                        <div class="img-container col-md-4 d-flex align-items-center">
-                            <img [src]="producto.imagenUrl" alt="{{ producto.nombre }}" style="max-width: 100%;">
+                        <div class="img-container col-7 d-flex align-items-center">
+                            <img [src]="producto.imagenUrl" alt="{{ producto.nombre }}">
                         </div>
                         
-                        <div class="product-info col-8">
+                        <div class="product-info col-12">
                             <h3>{{ producto.nombre }}</h3>
                             <p>Cantidad: {{ producto.cantidad }}</p>
                             <p>Precio: {{ producto.precio }}</p>
+                            <i class="fas fa-trash-alt delete-icon"></i>
                         </div>
                     </div>
                 </li>
