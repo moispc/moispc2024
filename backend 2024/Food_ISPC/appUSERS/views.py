@@ -44,6 +44,7 @@ class CreateTokenView(ObtainAuthToken):
             'nombre': user.nombre,
             'apellido': user.apellido,  
             'telefono': user.telefono,
+            'admin': user.is_superuser
         }, status=status.HTTP_200_OK)
 
 class LogoutView(APIView):
