@@ -18,18 +18,15 @@ class Pedido(models.Model):
         verbose_name_plural = 'Pedidos'
     def __unicode__(self):
         return self.id_pedidos
-    def __str__(self):
-        return self.id_pedidos 
-    
-
-
+    #def __str__(self):
+    #    return self.id_pedidos 
 
 class Carrito(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='carrito_producto')
     cantidad = models.PositiveIntegerField(default=1)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comprado = models.BooleanField(default=False)
-    id_pedido = models.ForeignKey(Pedido, models.DO_NOTHING, default=1)
+    id_pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     class Meta:
         db_table = 'carrito'
     
@@ -47,5 +44,5 @@ class DetallePedido(models.Model):
         verbose_name_plural = 'Detallepedidos'
     def __unicode__(self):
         return self.id_detalle
-    def __str__(self):
-        return self.id_detalle    
+    #def __str__(self):
+    #    return self.id_detalle    
