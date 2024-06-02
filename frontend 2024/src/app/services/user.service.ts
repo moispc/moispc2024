@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  url:string="http://127.0.0.1:8000/";
+  url:string="http://127.0.0.1:8000/appUSERS/";
   constructor(private http:HttpClient) { }
 
   getUsers(){
@@ -17,7 +17,7 @@ export class UserService {
 
   addUser(user:Usuario): Observable<Usuario>
   {
-    return this.http.post<Usuario>(this.url+'/users', user);
+    return this.http.post<Usuario>(this.url+'register/', user);
 
   }
 
