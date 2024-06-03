@@ -3,9 +3,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import DetallePedido, Pedido, Carrito
 from appFOOD.models import Producto
-from appUSERS.models import Usuario
 from datetime import date, datetime
+from .serializers import DetallePedidoSerializer
 from asgiref.sync import sync_to_async
+from appUSERS.models import Usuario
 
 class AgregarProductoAlCarrito(APIView):
     permission_classes = [IsAuthenticated]
@@ -15,8 +16,6 @@ class AgregarProductoAlCarrito(APIView):
         cantidad = int(request.data.get('cantidad'))
         id_usuario = int(request.data.get('id_usuario'))
         direccion = request.data.get('direccion')
-        # usuario = Usuario.objects.get(pk=id_usuario)
-
         
         if cantidad > producto.stock:
             return Response({'error': 'Stock insuficiente'}, status=400)
@@ -51,69 +50,75 @@ class AgregarProductoAlCarrito(APIView):
 
         producto.stock -= cantidad
         producto.save()
-
-        
-        
-        # if not pedido:
-            
-        #     pedido.hora_pedido= current_time
-        #     pedido.direccion_entrega="Cualquier Dire"
-        #     pedido.estado="Pendiente"
-        #     pedido.fecha_pedido = date.today()
-        #     pedido.save()
-
-
-
-
         return Response({'message': 'Producto agregado al carrito'})
 
 class VerCarrito(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        detalles_carrito = DetallePedido.objects.all()
-        total_carrito = sum(detalle.subtotal 
-                            for detalle in detalles_carrito)
-        carrito_data = [{'producto': detalle.producto.nombre, 'cantidad': detalle.cantidad} 
-                        for detalle in detalles_carrito]
-        
-        return Response({'carrito': carrito_data, 'total_carrito': total_carrito})
+        usuario = request.user
+        id_usuario = usuario.id_usuario
+
+        detalles_carrito = Carrito.objects.select_related("id_pedido").all().filter(usuario_id=id_usuario)
+        carrito_data = [
+            {
+                'producto': detalle.producto.nombre_producto,
+                'cantidad': detalle.cantidad,
+                "precio": detalle.producto.precio,
+                "imageURL": detalle.producto.imageURL
+            } for detalle in detalles_carrito]
+
+        return Response({'carrito': carrito_data})
 
 class ConfirmarPedido(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        detalles_carrito = DetallePedido.objects.all()
-        total_carrito = sum(detalle.subtotal 
-                            for detalle in detalles_carrito)
+        id_usuario = request.user.id
+        direccion = request.data.get('direccion')
+
+        detalles_carrito = Carrito.objects.filter(usuario_id=id_usuario)
+        if not detalles_carrito.exists():
+            return Response({'error': 'El carrito está vacío'}, status=400)
+         
+        
         for detalle in detalles_carrito:
-            if detalle.cantidad > detalle.producto.stock:
+            producto = detalle.producto
+            if detalle.cantidad > producto.stock:
                 return Response({'error': 'Stock insuficiente'}, status=400)
-            detalle.producto.stock -= detalle.cantidad
-            detalle.producto.save()
-        Pedido.objects.create(total=total_carrito)
+            producto.stock -= detalle.cantidad
+            producto.save()
+
         detalles_carrito.delete()
         return Response({'message': 'Pedido confirmado'})
 
 class EliminarProductoDelCarrito(APIView):
     permission_classes = [IsAuthenticated]
+    
 
-    def post(self, request, detalle_id):
-        detalle = DetallePedido.objects.get(pk=detalle_id)
-        producto = detalle.producto
-        producto.stock += detalle.cantidad
+    def post(self, request, carrito_id):
+        usuario = request.user
+        id_usuario = request.user.id
+        carrito_item = Carrito.objects.get(pk=carrito_id, usuario_id=id_usuario)
+        producto = carrito_item.producto
+        producto.stock += carrito_item.cantidad
         producto.save()
-        detalle.delete()
+        carrito_item.delete()
         return Response({'message': 'Producto eliminado del carrito'})
 
-class VaciarCarrito(APIView):
+class VerDashboard(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        detalles_carrito = DetallePedido.objects.all()
-        for detalle in detalles_carrito:
-            producto = detalle.producto
-            producto.stock += detalle.cantidad
-            producto.save()
-        detalles_carrito.delete()
-        return Response({'message': 'Carrito vaciado'})
+    def get(self, request, id_usuario):
+        vistaPedidos = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario)
+
+        carrito_data = [
+            {
+                "fecha_pedido": pedido.fecha_pedido,
+                "direccion_entrega": pedido.direccion_entrega,
+                "estado":pedido.estado,
+                "detalles": DetallePedidoSerializer(pedido.detalles.all(), many=True).data
+                } 
+                        for pedido in vistaPedidos]
+
+        return Response( { "results": carrito_data} )

@@ -21,7 +21,7 @@ class CategoriaProducto(models.Model):
 class Producto(models.Model):
     id_producto = models.AutoField(primary_key=True)  
     nombre_producto = models.CharField(max_length=45)  
-    descripcion = models.CharField(max_length=45)
+    descripcion = models.CharField(max_length=200)
     precio = models.FloatField()
     stock = models.IntegerField( 3, default = 0 )
     imageURL = models.CharField( max_length=100, null=True )
