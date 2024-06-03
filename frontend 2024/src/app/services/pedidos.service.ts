@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { DetallePedido } from '../model/detallePedido.model';
+import { Carrito } from '../model/detalleCarrito.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,16 +17,19 @@ export class PedidosService {
     return this.http.get(this.url + 'pedidos');
   }
 
-  // getDetallePedido():Observable <DetallePedido> {
-  //   this.http.get(this.url + 'pedidos')
-  // }
+  getDetallePedido():Observable <Carrito[]> {
+    const headers=new HttpHeaders({
+      'Authorization': 'Token '+localStorage.getItem('authToken')
+    })
+    return this.http.get<Carrito[]>(this.url + 'ver', {headers});
+  }
 
   public agregarProducto(product:DetallePedido):Observable<any> {
     const headers=new HttpHeaders({
       'Authorization': 'Token '+localStorage.getItem('authToken')
     })
    
-    return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product ,{ headers} );
+    return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product ,{headers} );
   }
 
   // public updatePedido(product:Pedido):Observable<Pedido> {
