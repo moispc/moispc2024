@@ -1,4 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200,300,500,600,700,900');
+.card-container {
+  max-width: 600px;
+  margin: auto;
+}
+.card img {
+  width: 50px;
+  height: auto;
+}
+
+
+
+
+
+
+
+/* @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200,300,500,600,700,900');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap');
 
 .container {
@@ -275,4 +290,4 @@ input[type=radio]:checked ~ .radio::before {
 .button button i {
   font-size: 1.2rem;
   margin-right: 5px;
-}
+} */
