@@ -71,7 +71,7 @@ class VerCarrito(APIView):
                 "imageURL": detalle.producto.imageURL
             } for detalle in detalles_carrito]
 
-        return Response({'carrito': carrito_data})
+        return Response(carrito_data)
 
 class ConfirmarPedido(APIView):
     permission_classes = [IsAuthenticated]
@@ -118,7 +118,9 @@ class EliminarProductoDelCarrito(APIView):
 class VerDashboard(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, id_usuario):
+    def get(self, request):
+        usuario = request.user
+        id_usuario = usuario.id_usuario
         vistaPedidos = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario)
         print("holo")
 
