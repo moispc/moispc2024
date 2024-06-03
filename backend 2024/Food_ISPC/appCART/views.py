@@ -7,14 +7,16 @@ from datetime import date, datetime
 from .serializers import DetallePedidoSerializer
 from asgiref.sync import sync_to_async
 from appUSERS.models import Usuario
+from rest_framework import status
 
 class AgregarProductoAlCarrito(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, producto_id):
+
         producto = Producto.objects.get(pk=producto_id)
         cantidad = int(request.data.get('cantidad'))
-        id_usuario = int(request.data.get('id_usuario'))
+        id_usuario = request.user.id_usuario
         direccion = request.data.get('direccion')
         
         if cantidad > producto.stock:
@@ -95,16 +97,22 @@ class ConfirmarPedido(APIView):
 class EliminarProductoDelCarrito(APIView):
     permission_classes = [IsAuthenticated]
     
+    def delete(self, request, carrito_id):
 
-    def post(self, request, carrito_id):
-        usuario = request.user
-        id_usuario = request.user.id
-        carrito_item = Carrito.objects.get(pk=carrito_id, usuario_id=id_usuario)
-        producto = carrito_item.producto
-        producto.stock += carrito_item.cantidad
-        producto.save()
-        carrito_item.delete()
-        return Response({'message': 'Producto eliminado del carrito'})
+        try:
+
+            carrito_item = Carrito.objects.get(pk=carrito_id)
+
+            detalle_item = DetallePedido.objects.get(id_producto_id=carrito_item.producto.id_producto, id_pedido_id = carrito_item.id_pedido)
+
+            producto = carrito_item.producto
+            producto.stock += carrito_item.cantidad
+            producto.save()
+            carrito_item.delete()
+            detalle_item.delete()
+            return Response({'message': 'Producto eliminado del carrito'})
+        except Carrito.DoesNotExist:
+            return Response({"error": "No existe un producto en el carrito con ese id de carrito."}, status=status.HTTP_404_NOT_FOUND)
 
 class VerDashboard(APIView):
     permission_classes = [IsAuthenticated]
