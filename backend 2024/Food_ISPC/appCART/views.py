@@ -7,14 +7,16 @@ from datetime import date, datetime
 from .serializers import DetallePedidoSerializer
 from asgiref.sync import sync_to_async
 from appUSERS.models import Usuario
+from rest_framework import status
 
 class AgregarProductoAlCarrito(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, producto_id):
+
         producto = Producto.objects.get(pk=producto_id)
         cantidad = int(request.data.get('cantidad'))
-        id_usuario = int(request.data.get('id_usuario'))
+        id_usuario = request.user.id_usuario
         direccion = request.data.get('direccion')
         
         if cantidad > producto.stock:
@@ -62,55 +64,65 @@ class VerCarrito(APIView):
         detalles_carrito = Carrito.objects.select_related("id_pedido").all().filter(usuario_id=id_usuario)
         carrito_data = [
             {
+                "id": detalle.id,
                 'producto': detalle.producto.nombre_producto,
                 'cantidad': detalle.cantidad,
                 "precio": detalle.producto.precio,
                 "imageURL": detalle.producto.imageURL
             } for detalle in detalles_carrito]
 
-        return Response({'carrito': carrito_data})
+        return Response(carrito_data)
 
 class ConfirmarPedido(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        id_usuario = request.user.id
-        direccion = request.data.get('direccion')
+        try:
+            usuario = request.user
+            id_usuario = usuario.id_usuario
 
-        detalles_carrito = Carrito.objects.filter(usuario_id=id_usuario)
-        if not detalles_carrito.exists():
-            return Response({'error': 'El carrito está vacío'}, status=400)
-         
-        
-        for detalle in detalles_carrito:
-            producto = detalle.producto
-            if detalle.cantidad > producto.stock:
-                return Response({'error': 'Stock insuficiente'}, status=400)
-            producto.stock -= detalle.cantidad
-            producto.save()
+            detalles_carrito = Carrito.objects.filter(usuario_id=id_usuario)
+            pedido  = Pedido.objects.get(id_usuario_id=id_usuario, estado="Pendiente")
+            # if not detalles_carrito.exists():
+            #     return Response({'error': 'El carrito está vacío'}, status=400)   
 
-        detalles_carrito.delete()
-        return Response({'message': 'Pedido confirmado'})
+            detalles_carrito.delete()
+            pedido.estado = "Aprobado por Chayanne"
+            pedido.save()
+            return Response({'message': 'Pedido confirmado'})
+        except Carrito.DoesNotExist:
+            return Response({"error": "El carrito está vacio."}, status=status.HTTP_404_NOT_FOUND)
+        except Pedido.DoesNotExist:
+            return Response({"error": "El carrito está vacio."}, status=status.HTTP_404_NOT_FOUND)
 
 class EliminarProductoDelCarrito(APIView):
     permission_classes = [IsAuthenticated]
     
+    def delete(self, request, carrito_id):
 
-    def post(self, request, carrito_id):
-        usuario = request.user
-        id_usuario = request.user.id
-        carrito_item = Carrito.objects.get(pk=carrito_id, usuario_id=id_usuario)
-        producto = carrito_item.producto
-        producto.stock += carrito_item.cantidad
-        producto.save()
-        carrito_item.delete()
-        return Response({'message': 'Producto eliminado del carrito'})
+        try:
+
+            carrito_item = Carrito.objects.get(pk=carrito_id)
+
+            detalle_item = DetallePedido.objects.get(id_producto_id=carrito_item.producto.id_producto, id_pedido_id = carrito_item.id_pedido)
+
+            producto = carrito_item.producto
+            producto.stock += carrito_item.cantidad
+            producto.save()
+            carrito_item.delete()
+            detalle_item.delete()
+            return Response({'message': 'Producto eliminado del carrito'})
+        except Carrito.DoesNotExist:
+            return Response({"error": "No existe un producto en el carrito con ese id de carrito."}, status=status.HTTP_404_NOT_FOUND)
 
 class VerDashboard(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, id_usuario):
+    def get(self, request):
+        usuario = request.user
+        id_usuario = usuario.id_usuario
         vistaPedidos = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario)
+        print("holo")
 
         carrito_data = [
             {
