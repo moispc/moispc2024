@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
+import { PedidosService } from '../../services/pedidos.service';
+import { Carrito } from '../../model/detalleCarrito.model';
 
 @Component({
   selector: 'app-carrito',
@@ -8,25 +10,32 @@ import { NgFor } from '@angular/common';
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css'
 })
-export class CarritoComponent {
-  productos = [
-    { 
-      nombre: 'Empanadas Árabes', 
-      cantidad: 6, 
-      precio: 10.99, 
-      imagenUrl: './assets/carta/arabes_thumbnail.webp' 
-    },
-    { 
-      nombre: 'Empanadas de J&Q', 
-      cantidad: 4, 
-      precio: 15.99, 
-      imagenUrl: './assets/carta/j&q_thumbnail.webp' 
-    }
-  ];
+
+export class CarritoComponent implements OnInit {
+  detallePedido:Carrito[] = [];
+
+  constructor(private pedidoservice:PedidosService) {
+  }
+
+  ngOnInit(): void {
+    this.cargarDetalle();
+  }
 
   sidebarVisible: boolean = true;
 
   cerrarSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
   }
+
+  cargarDetalle() {
+      this.pedidoservice.getDetallePedido().subscribe({
+        next: (detalle:Carrito[]) => {
+          this.detallePedido = detalle;
+          console.log("mje: ", detalle);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+    };
 }

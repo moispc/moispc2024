@@ -3,16 +3,16 @@
         <button type="button" class="btn-close colapse-sidebar ms-auto mb-5" aria-label="Close" (click)="cerrarSidebar()"></button>
         <div class="sidebar-items">
             <ul class="shop-list" style="list-style-type: none;">
-                <li class="product-card bg-light position-relative rounded rounded-2 my-2" *ngFor="let producto of productos">
+                <li class="product-card bg-light position-relative rounded rounded-2 my-2" *ngFor="let detalle of detallePedido">
                     <div class="card-content row">
                         <div class="img-container col-7 d-flex align-items-center">
-                            <img [src]="producto.imagenUrl" alt="{{ producto.nombre }}">
+                            <img [src]="detalle.imageURL" alt="{{ detalle.producto }}">
                         </div>
                         
                         <div class="product-info col-12">
-                            <h3>{{ producto.nombre }}</h3>
-                            <p>Cantidad: {{ producto.cantidad }}</p>
-                            <p>Precio: {{ producto.precio }}</p>
+                            <h3>{{ detalle.producto }}</h3>
+                            <p>Cantidad: {{ detalle.cantidad }}</p>
+                            <p>Precio: {{ detalle.precio }}</p>
                             <i class="fas fa-trash-alt delete-icon"></i>
                         </div>
                     </div>
