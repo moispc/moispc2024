@@ -64,6 +64,7 @@ class VerCarrito(APIView):
         detalles_carrito = Carrito.objects.select_related("id_pedido").all().filter(usuario_id=id_usuario)
         carrito_data = [
             {
+                "id": detalle.id,
                 'producto': detalle.producto.nombre_producto,
                 'cantidad': detalle.cantidad,
                 "precio": detalle.producto.precio,
