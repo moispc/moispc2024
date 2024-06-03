@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { NgFor, CommonModule } from '@angular/common';
 import { Producto } from '../../../app/model/producto.model';
@@ -9,7 +9,7 @@ import { DetallePedido } from '../../model/detallePedido.model';
 import { CarritoComponent } from '../carrito/carrito.component';
 const myModal = document.getElementById('myModal');
 const myInput = document?.getElementById('myInput');
-
+declare var bootstrap: any;
 // const fetchComentarios = async () => {
 //   const response = await fetch('assets/data/infoProducts.json');
 //   return await response.json();
@@ -24,26 +24,27 @@ const myInput = document?.getElementById('myInput');
 })
 export class CartaComponent implements OnInit {
   @Input() public producto: Producto;
-  productos: Producto[]=[];
-  cantidadIngresada:number=1;
-  subtotal:number=0;
+  productos: Producto[] = [];
+  cantidadIngresada: number = 1;
+  subtotal: number = 0;
   
-  constructor(private productService: ProductsService, private pedidoService:PedidosService) {
+// brilloBajado:boolean=false;
+  constructor(
+    private productService: ProductsService,
+    private pedidoService: PedidosService
+  ) {
     this.producto = {
       id_producto: 0,
       nombre_producto: '',
       imageURL: {},
       precio: 0,
       descripcion: '',
-      stock:0,
-      id_categoria:0
+      stock: 0,
+      id_categoria: 0,
     };
-    
 
-    
-
-     productService.getProducts().subscribe({
-      next: (productos:Producto[]) => {
+    productService.getProducts().subscribe({
+      next: (productos: Producto[]) => {
         this.productos = productos;
       },
       error: (error) => {
@@ -51,39 +52,56 @@ export class CartaComponent implements OnInit {
       },
     });
   }
-  ngOnInit(): void {
- 
-  }
+  ngOnInit(): void {}
 
   cargarModal(producto: Producto) {
-    
-    this.producto=producto;
-    
-    
-
-    // this.producto.total = producto.precio;
+    this.producto = producto;
+    this.calcularSubtotal();
+  
   }
 
-  calcularSubtotal(){
-    this.subtotal=this.producto.precio*this.cantidadIngresada
+  calcularSubtotal() {
+    this.subtotal = this.producto.precio * this.cantidadIngresada;
   }
 
-  addProducto(){
-   const detallePedido = new DetallePedido(1,0, this.producto.id_producto, this.cantidadIngresada,'Gerónico 1257')
+  addProducto() {
+    const detallePedido = new DetallePedido(
+      1,
+      0,
+      this.producto.id_producto,
+      this.cantidadIngresada,
+      'Gerónico 1257'
+    );
     this.pedidoService.agregarProducto(detallePedido).subscribe({
       next: () => {
-        alert("Producto añadido correctamente");
-        this.mostrarCarrito;
+        this.pedidoService.tiggerActualizarCarrito();
+        this.toggleCarrito();
+        this.cerrarModal();
+        
       },
       error: (error) => {
         console.error(error);
       },
     });
-    
   }
 
-  mostrarCarrito: boolean = false;
-  toggleCarrito() {
-    this.mostrarCarrito = !this.mostrarCarrito;
+  toggleCarrito()
+  {
+    this.pedidoService.triggerCerrarSidebar();
+    // this.bajarBrillo();
   }
+
+  cerrarModal() {
+    console.log(bootstrap);
+    const modalElement = document.getElementById('modalCompra');
+    if (modalElement) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+      modalInstance.hide();
+    }
+  }
+
+  // bajarBrillo(){
+  //   this.brilloBajado = true;
+  //   document.body.classList.add('brillo-bajo'); // Agrega la clase CSS al body
+  // }
 }
