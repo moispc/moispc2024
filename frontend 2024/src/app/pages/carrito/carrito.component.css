@@ -23,7 +23,7 @@
     overflow: hidden;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-bottom: 15px;
+    
     display: flex;
     align-items: center;
     margin-left: -15px;
@@ -34,12 +34,12 @@
 }
 
 .img-container {
-    flex: 0 0 auto; /* La imagen no debe crecer ni encoger */
+     /* La imagen no debe crecer ni encoger */
     padding: 20px;
   }
 
 .product-info {
-    flex: 1; /* La información del producto ocupa todo el espacio disponible */
+    /* La información del producto ocupa todo el espacio disponible */
     margin-top: 20px;
 }
 
@@ -67,4 +67,9 @@ h3 {
     right: 10px;
     cursor: pointer;
     color: black; /* Puedes cambiar el color según tu preferencia */
+}
+#imageProducto{
+  
+    height: 160px;
+    width: 120px;
 }
