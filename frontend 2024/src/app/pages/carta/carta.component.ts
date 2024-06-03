@@ -27,7 +27,8 @@ export class CartaComponent implements OnInit {
   productos: Producto[] = [];
   cantidadIngresada: number = 1;
   subtotal: number = 0;
-
+  
+// brilloBajado:boolean=false;
   constructor(
     private productService: ProductsService,
     private pedidoService: PedidosService
@@ -75,7 +76,6 @@ export class CartaComponent implements OnInit {
       next: () => {
         this.pedidoService.tiggerActualizarCarrito();
         this.toggleCarrito();
-        
         this.cerrarModal();
         
       },
@@ -88,6 +88,7 @@ export class CartaComponent implements OnInit {
   toggleCarrito()
   {
     this.pedidoService.triggerCerrarSidebar();
+    // this.bajarBrillo();
   }
 
   cerrarModal() {
@@ -98,4 +99,9 @@ export class CartaComponent implements OnInit {
       modalInstance.hide();
     }
   }
+
+  // bajarBrillo(){
+  //   this.brilloBajado = true;
+  //   document.body.classList.add('brillo-bajo'); // Agrega la clase CSS al body
+  // }
 }
