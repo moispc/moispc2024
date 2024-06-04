@@ -1,40 +1,67 @@
-<aside [class.collapsed]="!sidebarVisible" class="cart-aside">
-    <div class="sidebar p-2 d-flex flex-column fixed-top">
-        <button type="button" class="btn-close colapse-sidebar ms-auto mb-5" aria-label="Close" (click)="cerrarSidebar()"></button>
-<h1 class="title">Mi Carrito</h1>
-       
-        <div class="sidebar-items">
-            <ul class="shop-list" style="list-style-type: none;">
-                <li class="product-card bg-light position-relative rounded rounded-2 my-2" *ngFor="let detalle of detallePedido">
-                    
-                    
-                    <div class="card-content row">
-                        <div class="img-container img-thumbnail col-5  align-items-center">
-                            <img [src]="detalle.imageURL" alt="{{ detalle.producto }}" id="imageProducto">
-                        </div>
-                        
-                        <div class="product-info col-7">
-                            <h5 class="">{{ detalle.producto }}</h5>
-                            <hr>
-                            <h6>Cantidad: {{ detalle.cantidad }}</h6>
-                            <h6>Precio: $ {{ detalle.precio }}</h6>
-                            <hr>
-                            <h6 style="color:rgb(2, 54, 165)">Subtotal: $ {{ detalle.precio*detalle.cantidad }}</h6>
-                            <button type="button" class="btn delete-icon" (click)="eliminarDetalle(detalle)">
-                            <li class="fas fa-trash-alt"></li>
-                            </button>
-                        </div>
-             
-                    </div>
-                    
-                </li>
-            </ul>
-        </div>
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary">Vaciar Carrito</button>
-            <button type="button" class="btn btn-primary" (click)="cerrarSidebar()">Añadir + Productos</button>
-            <button type="button" class="btn btn-primary" (click)="irAPagar()">Confirmar Compra</button>
+<aside [class.collapsed]="!isVisible" class="cart-aside">
+  <div class="sidebar p-2 d-flex flex-column fixed-top">
+    <button
+      type="button"
+      class="btn-close colapse-sidebar ms-auto mb-5"
+      aria-label="Close"
+      (click)="cerrarSidebar()"
+    ></button>
+    <p class="fs-1 fw-bold title text-center">Mi Carrito</p>
+
+    @if (detallePedido.length==0) {
+    <p class="h3 text-center title">
+      El carrito está vacio. 
+    </p>
+    }
+    <div class="sidebar-items">
+      <ul class="shop-list" style="list-style-type: none">
+        <li
+          class="product-card bg-light position-relative rounded rounded-2 my-2"
+          *ngFor="let detalle of detallePedido"
+        >
+          <div class="card-content row">
+            <div class="img-container img-thumbnail col-5 align-items-center">
+              <img class="object-fit-fill border rounded"
+                [src]="detalle.imageURL"
+                alt="{{ detalle.producto }}"
+                id="imageProducto"
+              />
+            </div>
+
+            <div class="product-info col-7">
+              <h5 class="">{{ detalle.producto }}</h5>
+              <hr />
+              <h6>Cantidad: {{ detalle.cantidad }}</h6>
+              <h6>Precio: $ {{ detalle.precio }}</h6>
+              <hr />
+              <h6 style="color: rgb(2, 54, 165)">
+                Subtotal: $ {{ detalle.precio * detalle.cantidad }}
+              </h6>
+              <button
+                type="button"
+                class="btn delete-icon"
+                (click)="eliminarDetalle(detalle)"
+              >
+                <li class="fas fa-trash-alt"></li>
+              </button>
+            </div>
           </div>
-        
+        </li>
+      </ul>
     </div>
+    @if (detallePedido.length!=0) {
+      <p class="h5 bg-info-subtle text-info-emphasis text-end total">Total a abonar : $ {{total}}<a style="font-size: small;">(iva Incluido)</a></p>
+      }
+
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <!-- <button type="button" class="btn btn-secondary">Vaciar Carrito</button> -->
+      <button type="button" class="btn btn-secondary" (click)="cerrarSidebar()">
+        Añadir + Productos
+      </button>
+      <button type="button" class="btn btn-success" (click)="irAPagar()">
+        Confirmar Compra
+      </button>
+    </div>
+  </div>
 </aside>
