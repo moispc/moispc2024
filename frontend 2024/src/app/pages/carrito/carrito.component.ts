@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
 import { Carrito } from '../../model/Carrito.model';
+import { Router } from '@angular/router';
+import { CartaComponent } from '../carta/carta.component';
+CartaComponent
+Router
 
 @Component({
   selector: 'app-carrito',
@@ -13,8 +17,9 @@ import { Carrito } from '../../model/Carrito.model';
 export class CarritoComponent implements OnInit {
   detallePedido: Carrito[] = [];
   detallePedidoParcial: Carrito[] = [];
+  // router: any;
 
-  constructor(private pedidoservice: PedidosService) {}
+  constructor(private pedidoservice: PedidosService, private router: Router) {}
 
   ngOnInit(): void {
     this.pedidoservice.cerrarSidebar$.subscribe(()=>{
@@ -30,7 +35,7 @@ export class CarritoComponent implements OnInit {
   sidebarVisible: boolean = false;
 
   cerrarSidebar() {
-   
+
     this.sidebarVisible = !this.sidebarVisible;
   }
 
@@ -38,7 +43,7 @@ export class CarritoComponent implements OnInit {
     this.pedidoservice.getDetallePedido().subscribe({
       next: (detalle: Carrito[]) => {
         this.detallePedido = detalle;
-     
+
       },
       error: (error) => {
         console.error(error);
@@ -48,14 +53,17 @@ export class CarritoComponent implements OnInit {
 
   irAPagar()
   {
-    alert("Se intenta pagar");
+    this.cerrarSidebar();
+    this.router.navigate(['/pagar']);
+
+    // alert("Se intenta pagar");
   }
 
   eliminarDetalle(detalle:Carrito){
-   
+
     this.pedidoservice.deleteDetallePedido(detalle).subscribe({
       next: () => {
-        
+
         this.cargarDetalle();
       },
       error: (error) => {
@@ -63,4 +71,5 @@ export class CarritoComponent implements OnInit {
       },
     });
   }
+
 }

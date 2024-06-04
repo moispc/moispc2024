@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
+import { Router } from '@angular/router';
+Router
 
 NgModel
 
@@ -20,7 +22,10 @@ export class CheckoutComponent {
   expiryYear: string = '';
   cvv: string = '';
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+
+
 
   onSubmit() {
     if (this.paymentMethod === 'paypal') {
@@ -40,6 +45,7 @@ export class CheckoutComponent {
     } else {
       console.log('Selecciona un método de pago');
     }
+    this.router.navigate(['/exito']);
   }
 
 }
