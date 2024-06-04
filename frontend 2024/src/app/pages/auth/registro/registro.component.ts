@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../../../../model/usuario.model';
+import { Usuario } from '../../../../app/model/usuario.model';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { UserService } from '../../../services/user.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-registro',
   standalone: true,
@@ -14,38 +17,33 @@ import {
   styleUrl: './registro.component.css',
 })
 export class RegistroComponent implements OnInit {
-  usuario?: Usuario;
+  usuario: Usuario = new Usuario();
   form: FormGroup;
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {
     this.form = this.formBuilder.group({
       nombre: ['', [Validators.required]],
-      usuario: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(10),
-        ],
-      ],
+      apellido: ['', [Validators.required]],
       telefono: [
         '',
         [
           Validators.required,
           Validators.minLength(7),
-          Validators.maxLength(10),
+          Validators.maxLength(12),
           Validators.pattern(/^([0-9])*$/),
         ],
       ],
-      mail: ['', [Validators.email, Validators.required]],
+      email: ['', [Validators.email, Validators.required]],
       password: [
         '',
         [
           Validators.required,
           Validators.minLength(8),
-          Validators.maxLength(20),
-          Validators.pattern(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/
-          ),
+          
+          
         ],
       ],
       checkPassword: ['', [Validators.required]],
@@ -57,7 +55,19 @@ export class RegistroComponent implements OnInit {
   onEnviar(event: Event): void {
     event.preventDefault;
     if (this.form.valid) {
-      console.log('Formulario válido');
+      
+      this.usuario = this.form.value;
+      console.log(this.usuario);
+      this.userService.addUser(this.usuario).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.router.navigate(['exitoNuevo']);
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+      this.form.reset();
     } else {
       this.form.markAllAsTouched();
       console.log('error en formulario');
@@ -70,11 +80,11 @@ export class RegistroComponent implements OnInit {
   get Password() {
     return this.form.get('password');
   }
-  get Mail() {
-    return this.form.get('mail');
+  get Email() {
+    return this.form.get('email');
   }
-  get Usuario() {
-    return this.form.get('usuario');
+  get Apellido() {
+    return this.form.get('apellido');
   }
   get Telefono() {
     return this.form.get('telefono');

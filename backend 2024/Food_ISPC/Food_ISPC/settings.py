@@ -32,6 +32,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# CORS allowed 
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "http://localhost:4200"
+]
 
 # Application definition
 
@@ -42,7 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'appFOOD'
+    'rest_framework',
+    'rest_framework.authtoken',
+    "corsheaders",
+    'appUSERS.apps.AppusersConfig',
+    'appFOOD.apps.AppfoodConfig',
+    'appCART.apps.AppcartConfig',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'Food_ISPC.urls'
@@ -83,10 +95,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get('DB_NAME'),
-        # 'NAME': 'prueba',
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': os.environ.get('DB_HOST'),
         'PORT': os.environ.get('DB_PORT'),
         'OPTIONS': {
             'sql_mode': 'traditional',
@@ -138,3 +149,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'appUSERS.Usuario'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',       
+    ],    
+}

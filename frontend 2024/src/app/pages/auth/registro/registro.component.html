@@ -21,7 +21,7 @@
             [formGroup]="form"
             class="formulario__Registro"
             (ngSubmit)="onEnviar($event)"
-            novalidate
+            
           >
             <h2 class="text-color-terciario inter text-center my-4">
               Registrarse
@@ -46,37 +46,32 @@
             <div class="mb-3 input-container">
               <input
                 type="text"
-                formControlName="usuario"
+                formControlName="apellido"
                 class="form-control"
-                name="usuario"
-                id="usuario"
-                data-tipo="usuario"
-                placeholder="Usuario"
+                name="apellido"
+                id="apellido"
+                data-tipo="apellido"
+                placeholder="apellido"
               />
-              @if(Usuario?.errors && Usuario?.touched) {
-              @if(Usuario?.hasError('required')) {
+              @if(Apellido?.errors && Apellido?.touched) {
+              @if(Apellido?.hasError('required')) {
               <p class="text-danger">El usuario es requerido</p>
-              } @else if(Usuario?.hasError('minlength') ||
-              Usuario?.hasError('maxlength') ){
-              <p class="text-danger">
-                El usuario debe contener entre 5 y 10 caracteres
-              </p>
               } }
             </div>
 
             <div class="mb-3 input-container">
               <input
                 class="form-control input"
-                formControlName="mail"
-                name="mail"
-                id="mail"
+                formControlName="email"
+                name="email"
+                id="email"
                 type="email"
                 placeholder="Correo electrónico"
               />
-              @if(Mail?.errors && Mail?.touched) {
-              @if(Mail?.hasError('required')) {
+              @if(Email?.errors && Email?.touched) {
+              @if(Email?.hasError('required')) {
               <p class="text-danger">El correo electrónico es requerido</p>
-              } @else if(Mail?.hasError('email') ){
+              } @else if(Email?.hasError('email') ){
               <p class="text-danger">Ingrese un mail válido</p>
               } }
             </div>
@@ -110,6 +105,7 @@
                 type="password"
                 placeholder="Contraseña nueva"
                 data-tipo="password"
+                autocomplete="new-password"
               />
               @if(Password?.errors && Password?.touched) {
               @if(Password?.hasError('required')) {
@@ -117,9 +113,7 @@
               } @else if(Password?.hasError('minlength') ||
               Password?.hasError('maxlength')){
               <p class="text-danger">
-                Su contraseña tiene que tener entre 8 y 20 caracteres, debe
-                tener al menos una letra minúscula, una mayúscula y un número.
-                No debe contener espacios, caracteres especiales ni emoji.
+                Su contraseña tiene que tener al menos 8 caracteres.
               </p>
 
               } }
@@ -146,7 +140,6 @@
               <button
                 class="btn bg-color-secundario my-3 inter"
                 id="btn-registro"
-                (click)="registrar()"
                 type="submit"
               >
                 Registrarse
