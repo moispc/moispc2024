@@ -3,6 +3,9 @@ import { NgFor } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
 import { Carrito } from '../../model/Carrito.model';
 import { Router } from '@angular/router';
+import { CartaComponent } from '../carta/carta.component';
+CartaComponent
+Router
 
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription } from 'rxjs';
@@ -58,7 +61,6 @@ export class CarritoComponent implements OnInit, OnDestroy {
       next: (detalle: Carrito[]) => {
         this.total = 0;
         this.detallePedido = detalle;
-
         for (let det of detalle) {
           this.total += det.precio * det.cantidad;
         }
@@ -69,26 +71,19 @@ export class CarritoComponent implements OnInit, OnDestroy {
     });
   }
 
-  irAPagar() {
+  irAPagar()
+  {
     this.cerrarSidebar();
     this.router.navigate(['/pagar']);
 
-
-    // this.pedidoservice.confirmarPedido().subscribe({
-    //   next: (response) => {
-    //     console.log(response);
-    //     console.log("Pedido a sido confirmado satisfactoriamente")
-    //   },
-    //   error: (error) => {
-    //     console.error(error);
-    //   },
-    // });
-    //alert('Se intenta pagar');
+    // alert("Se intenta pagar");
   }
 
-  eliminarDetalle(detalle: Carrito) {
+  eliminarDetalle(detalle:Carrito){
+
     this.pedidoservice.deleteDetallePedido(detalle).subscribe({
       next: () => {
+
         this.cargarDetalle();
       },
       error: (error) => {

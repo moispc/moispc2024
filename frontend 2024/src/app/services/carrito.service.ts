@@ -6,11 +6,15 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class CarritoService {
 
-  private carritoVisible=new BehaviorSubject<boolean>(false);
+  
   private actualizarCarritoSubject=new Subject<void>();
+  
   actualizarCarrito$=this.actualizarCarritoSubject.asObservable();
+  
+  private carritoVisible=new BehaviorSubject<boolean>(false);
   carritoVisible$=this.carritoVisible.asObservable();
-  constructor() { }
+  
+  
 
   tiggerActualizarCarrito(){
     this.actualizarCarritoSubject.next();
@@ -30,6 +34,8 @@ export class CarritoService {
   toggleCarrito() {
     this.carritoVisible.next(!this.carritoVisible.value);
   }
-
+  esVisible(){
+    return this.carritoVisible.value;
+  }
 
 }
