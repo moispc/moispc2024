@@ -10,11 +10,13 @@ import { CarritoComponent } from '../pages/carrito/carrito.component';
 })
 export class PedidosService {
 
-  url:string="http://127.0.0.1:8000/appCART/";
-  private cerrarSidebarSubject=new Subject<void>();
-  private actualizarCarritoSubject=new Subject<void>();
-  actualizarCarrito$=this.actualizarCarritoSubject.asObservable();
-  cerrarSidebar$=this.cerrarSidebarSubject.asObservable();
+  url:string="http://localhost:8000/appCART/";
+
+  // private cerrarSidebarSubject=new Subject<boolean>();
+  // private actualizarCarritoSubject=new Subject<void>();
+  // actualizarCarrito$=this.actualizarCarritoSubject.asObservable();
+  // cerrarSidebar$=this.cerrarSidebarSubject.asObservable();
+  
   constructor(private http:HttpClient) { }
 
   getPedidos() {
@@ -26,6 +28,13 @@ export class PedidosService {
       'Authorization': 'Token '+localStorage.getItem('authToken')
     })
     return this.http.get<Carrito[]>(this.url + 'ver', {headers});
+  }
+
+  confirmarPedido():Observable<any>{
+    const headers=new HttpHeaders({
+      'Authorization': 'Token '+localStorage.getItem('authToken')
+    })
+    return this.http.post<any>(this.url + 'confirmar/', {headers});
   }
 
   deleteDetallePedido(detalle:Carrito):Observable<void>{
@@ -52,13 +61,13 @@ export class PedidosService {
   //   return this.http.delete<Producto>(this.url + '/products/' + product.id_producto);
   // }
 
-  tiggerActualizarCarrito(){
-    this.actualizarCarritoSubject.next();
-  }
+  // tiggerActualizarCarrito(){
+  //   this.actualizarCarritoSubject.next();
+  // }
 
-  triggerCerrarSidebar(){
-    console.log("entro al servicio");
-    this.cerrarSidebarSubject.next();
-  }
+  // triggerCerrarSidebar(visible:boolean){
+    
+  //   this.cerrarSidebarSubject.next(visible);
+  // }
 
 }

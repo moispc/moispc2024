@@ -1,12 +1,16 @@
 <!-- <div class="bloqueo" *ngIf="brilloBajado"></div> -->
 <h1 class="title">Conoce nuestra variedad de comidas.</h1>
 
-<button class="btn-carrito" aria-label="mostrar carrito de compras" (click)="toggleCarrito()">
-  <!-- <img src="./assets/icons/cart-icon.svg" alt="Icono de carrito de compras"> -->
+@if(estaLogueado())
+{
+<button
+  class="btn-carrito"
+  aria-label="mostrar carrito de compras"
+  (click)="toggleCarrito()"
+>
+  <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 </button>
-
-
-
+}
 <section>
   <div class="container py-5">
     <div
@@ -20,9 +24,12 @@
             <div class="row">
               <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                 <div class="image-container">
-                  <img src="{{ product.imageURL }}"  data-bs-target="#modalImagen"
-                  data-bs-toggle="modal" (click)="cargarModal(product)"
-                   />
+                  <img
+                    src="{{ product.imageURL }}"
+                    data-bs-target="#modalImagen"
+                    data-bs-toggle="modal"
+                    (click)="cargarModal(product)"
+                  />
 
                   <div class="mask"></div>
                 </div>
@@ -65,18 +72,15 @@
                   <h4 class="mb-1 me-1" id="precioNuevo">
                     {{ "$ " + product.precio }}
                   </h4>
-                  <span class="text-danger"
-                    ><s>{{ "$ " + product.precio }}</s></span
+                  <span id="precioViejo" class="text-danger"
+                    ><s>{{ "$ " + (product.precio * 1.3).toFixed(0) }}</s></span
                   >
                 </div>
                 <h6 class="text-success">Disponible</h6>
                 <div class="d-flex flex-column mt-4">
+                  
                   <button
-                    data-mdb-button-init
-                    data-mdb-ripple-init
                     class="btn btn-outline-primary btn-sm mt-2"
-                    data-bs-target="#modalCompra"
-                    data-bs-toggle="modal"
                     (click)="cargarModal(product)"
                     type="button"
                   >
@@ -94,7 +98,6 @@
 
 <div
   class="modal fade"
-
   id="modalCompra"
   data-bs-backdrop="static"
   data-bs-keyboard="false"
@@ -142,7 +145,11 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary confirm-button" (click)="addProducto()">
+        <button
+          type="button"
+          class="btn btn-primary confirm-button"
+          (click)="addProducto()"
+        >
           Añadir al carrito
         </button>
       </div>
@@ -150,25 +157,32 @@
   </div>
 </div>
 
-
-
-<div class="modal fade" id="modalImagen" tabindex="-1" aria-labelledby="modalImagen" aria-hidden="true">
+<div
+  class="modal fade"
+  id="modalImagen"
+  tabindex="-1"
+  aria-labelledby="modalImagen"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <img
-        class="img-fluid"
-        id="imagenModalZoom"
-        src="{{ producto.imageURL }}"
-        alt=""
-      />
+          class="img-fluid"
+          id="imagenModalZoom"
+          src="{{ producto.imageURL }}"
+          alt=""
+        />
       </div>
-      
     </div>
   </div>
 </div>
-
