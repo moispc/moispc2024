@@ -42,7 +42,7 @@ export class CarritoComponent implements OnInit, OnDestroy {
     }
   }
 
-  sidebarVisible: boolean = false;
+  
 
   cerrarSidebar() {
     this.carritoService.toggleCarrito();
@@ -64,16 +64,17 @@ export class CarritoComponent implements OnInit, OnDestroy {
   }
 
   irAPagar() {
-    // this.pedidoservice.confirmarPedido().subscribe({
-    //   next: (response) => {
-    //     console.log(response);
-    //     console.log("Pedido a sido confirmado satisfactoriamente")
-    //   },
-    //   error: (error) => {
-    //     console.error(error);
-    //   },
-    // });
-    //alert('Se intenta pagar');
+    this.cargarDetalle();
+    this.pedidoservice.confirmarPedido().subscribe({
+      next: (response) => {
+        
+        console.log("Pedido a sido confirmado satisfactoriamente")
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+    
   }
 
   eliminarDetalle(detalle: Carrito) {

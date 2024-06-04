@@ -31,24 +31,31 @@ export class PedidosService {
   }
 
   confirmarPedido():Observable<any>{
+    const hola={};
     const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken')
+      'Authorization': 'Token '+localStorage.getItem('authToken'),
+      'Content-Type':'aplication/json'
     })
-    return this.http.post<any>(this.url + 'confirmar/', {headers});
+    return this.http.post(this.url + 'confirmar/',hola, {headers});
   }
 
   deleteDetallePedido(detalle:Carrito):Observable<void>{
+   
     const headers=new HttpHeaders({
       'Authorization': 'Token '+localStorage.getItem('authToken')
+      
     })
     return this.http.delete<void>(this.url + 'eliminar/'+detalle.id, {headers})
 
   }
 
   public agregarProducto(product:DetallePedido):Observable<any> {
+    
     const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken')
-    })
+      'Authorization': 'Token '+localStorage.getItem('authToken'),
+      
+
+    });
    
     return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product ,{headers} );
   }
