@@ -22,10 +22,11 @@ export class AuthService {
     return this.http.post<{ token: string, user_id: string }>(`${this.apiUrl}login/`, { email, password }).pipe(
       map(response => {
         // Guardar el token en localStorage o en algún lugar seguro
+       
         localStorage.setItem('authToken', response.token);
         localStorage.setItem('idUser', response.user_id);
         this.authStatusSubject.next(true); // Notifica el cambio de estado de autenticación
-        console.log(response.token)
+       
         return true;
 
       }),
