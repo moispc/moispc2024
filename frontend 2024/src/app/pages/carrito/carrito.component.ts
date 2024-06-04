@@ -2,6 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
 import { Carrito } from '../../model/Carrito.model';
+import { Router } from '@angular/router';
+import { CartaComponent } from '../carta/carta.component';
+CartaComponent
+Router
+
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription } from 'rxjs';
 @Component({
@@ -20,7 +25,8 @@ export class CarritoComponent implements OnInit, OnDestroy {
   isVisible: boolean = false;
   constructor(
     private pedidoservice: PedidosService,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,9 +48,11 @@ export class CarritoComponent implements OnInit, OnDestroy {
     }
   }
 
-  
+  sidebarVisible: boolean = false;
 
   cerrarSidebar() {
+
+    this.sidebarVisible = !this.sidebarVisible;
     this.carritoService.toggleCarrito();
   }
 
@@ -63,23 +71,19 @@ export class CarritoComponent implements OnInit, OnDestroy {
     });
   }
 
-  irAPagar() {
-    this.cargarDetalle();
-    this.pedidoservice.confirmarPedido().subscribe({
-      next: (response) => {
-        
-        console.log("Pedido a sido confirmado satisfactoriamente")
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-    
+  irAPagar()
+  {
+    this.cerrarSidebar();
+    this.router.navigate(['/pagar']);
+
+    // alert("Se intenta pagar");
   }
 
-  eliminarDetalle(detalle: Carrito) {
+  eliminarDetalle(detalle:Carrito){
+
     this.pedidoservice.deleteDetallePedido(detalle).subscribe({
       next: () => {
+
         this.cargarDetalle();
       },
       error: (error) => {
@@ -87,4 +91,5 @@ export class CarritoComponent implements OnInit, OnDestroy {
       },
     });
   }
+
 }
