@@ -34,12 +34,12 @@
 }
 
 .img-container {
-     /* La imagen no debe crecer ni encoger */
+    
     padding: 20px;
   }
 
 .product-info {
-    /* La información del producto ocupa todo el espacio disponible */
+ 
     margin-top: 20px;
 }
 
@@ -66,10 +66,18 @@ h3 {
     bottom: 10px;
     right: 10px;
     cursor: pointer;
-    color: black; /* Puedes cambiar el color según tu preferencia */
+    color: black; 
 }
 #imageProducto{
   
     height: 160px;
     width: 120px;
+}
+
+.title{
+    color: white;
+}
+.total{
+    color: white;
+  
 }

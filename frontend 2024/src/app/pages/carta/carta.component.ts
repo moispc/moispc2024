@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { NgFor, CommonModule } from '@angular/common';
 import { Producto } from '../../../app/model/producto.model';
@@ -7,13 +7,11 @@ import { FormsModule } from '@angular/forms';
 import { PedidosService } from '../../services/pedidos.service';
 import { DetallePedido } from '../../model/detallePedido.model';
 import { CarritoComponent } from '../carrito/carrito.component';
-const myModal = document.getElementById('myModal');
-const myInput = document?.getElementById('myInput');
+import { CarritoService } from '../../services/carrito.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+
 declare var bootstrap: any;
-// const fetchComentarios = async () => {
-//   const response = await fetch('assets/data/infoProducts.json');
-//   return await response.json();
-// };
 
 @Component({
   selector: 'app-carta',
@@ -27,11 +25,13 @@ export class CartaComponent implements OnInit {
   productos: Producto[] = [];
   cantidadIngresada: number = 1;
   subtotal: number = 0;
-  
-// brilloBajado:boolean=false;
+
   constructor(
-    private productService: ProductsService,
-    private pedidoService: PedidosService
+    productService: ProductsService,
+    private pedidoService: PedidosService,
+    private carritoService: CarritoService,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.producto = {
       id_producto: 0,
@@ -55,11 +55,19 @@ export class CartaComponent implements OnInit {
   ngOnInit(): void {}
 
   cargarModal(producto: Producto) {
-    this.producto = producto;
-    this.calcularSubtotal();
-  
+    if (this.estaLogueado()) {
+      this.abrirModal();
+      this.producto = producto;
+      this.calcularSubtotal();
+    } else {
+      console.log('no está logueado');
+      this.router.navigate(['/login']);
+    }
   }
 
+  estaLogueado() {
+    return localStorage.getItem('authToken') != null ? true : false;
+  }
   calcularSubtotal() {
     this.subtotal = this.producto.precio * this.cantidadIngresada;
   }
@@ -74,10 +82,9 @@ export class CartaComponent implements OnInit {
     );
     this.pedidoService.agregarProducto(detallePedido).subscribe({
       next: () => {
-        this.pedidoService.tiggerActualizarCarrito();
+        this.carritoService.tiggerActualizarCarrito();
         this.toggleCarrito();
         this.cerrarModal();
-        
       },
       error: (error) => {
         console.error(error);
@@ -85,23 +92,28 @@ export class CartaComponent implements OnInit {
     });
   }
 
-  toggleCarrito()
-  {
-    this.pedidoService.triggerCerrarSidebar();
-    // this.bajarBrillo();
+  toggleCarrito() {
+    this.carritoService.tiggerActualizarCarrito();
+    this.carritoService.toggleCarrito();
   }
 
   cerrarModal() {
-    console.log(bootstrap);
     const modalElement = document.getElementById('modalCompra');
     if (modalElement) {
-      const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+      const modalInstance =
+        bootstrap.Modal.getInstance(modalElement) ||
+        new bootstrap.Modal(modalElement);
       modalInstance.hide();
     }
   }
 
-  // bajarBrillo(){
-  //   this.brilloBajado = true;
-  //   document.body.classList.add('brillo-bajo'); // Agrega la clase CSS al body
-  // }
+  abrirModal() {
+    const modalElement = document.getElementById('modalCompra');
+    if (modalElement) {
+      const modalInstance =
+        bootstrap.Modal.getInstance(modalElement) ||
+        new bootstrap.Modal(modalElement);
+      modalInstance.show();
+    }
+  }
 }

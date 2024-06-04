@@ -42,10 +42,8 @@ export class RegistroComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(8),
-          Validators.maxLength(20),
-          Validators.pattern(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/
-          ),
+          
+          
         ],
       ],
       checkPassword: ['', [Validators.required]],
