@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PedidosService } from '../../services/pedidos.service';
 Router
 
 NgModel
@@ -22,7 +23,7 @@ export class CheckoutComponent {
   expiryYear: string = '';
   cvv: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private pedidoService: PedidosService) { }
 
 
 
@@ -45,6 +46,12 @@ export class CheckoutComponent {
     } else {
       console.log('Selecciona un método de pago');
     }
+    this.pedidoService.confirmarPedido().subscribe({
+      next: () => {},
+      error: (error) => {
+        console.error(error);
+      },
+    });
     this.router.navigate(['/exito']);
   }
 
