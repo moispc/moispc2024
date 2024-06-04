@@ -6,4 +6,5 @@ export class Producto{
     descripcion:string="";
     id_categoria:number=0;
     stock:number=0;
+    
 }
