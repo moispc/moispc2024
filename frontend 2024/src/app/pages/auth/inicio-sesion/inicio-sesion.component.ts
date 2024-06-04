@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ReactiveFormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 // AuthService
@@ -9,7 +9,7 @@ import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-inicio-sesion',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './inicio-sesion.component.html',
   styleUrl: './inicio-sesion.component.css'
 })

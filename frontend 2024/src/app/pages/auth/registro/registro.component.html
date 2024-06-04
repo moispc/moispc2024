@@ -21,6 +21,7 @@
             [formGroup]="form"
             class="formulario__Registro"
             (ngSubmit)="onEnviar($event)"
+            
           >
             <h2 class="text-color-terciario inter text-center my-4">
               Registrarse
@@ -104,6 +105,7 @@
                 type="password"
                 placeholder="Contraseña nueva"
                 data-tipo="password"
+                autocomplete="new-password"
               />
               @if(Password?.errors && Password?.touched) {
               @if(Password?.hasError('required')) {
@@ -111,9 +113,7 @@
               } @else if(Password?.hasError('minlength') ||
               Password?.hasError('maxlength')){
               <p class="text-danger">
-                Su contraseña tiene que tener entre 8 y 20 caracteres, debe
-                tener al menos una letra minúscula, una mayúscula y un número.
-                No debe contener espacios, caracteres especiales ni emoji.
+                Su contraseña tiene que tener al menos 8 caracteres.
               </p>
 
               } }
