@@ -12,6 +12,7 @@ defusedxml==0.7.1
 Django==4.2
 django-cors-headers==4.3.1
 djangorestframework==3.15.1
+djangorestframework-simplejwt == 5.3.1
 docopt==0.6.2
 executing==2.0.1
 fastjsonschema==2.19.1
