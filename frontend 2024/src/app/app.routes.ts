@@ -12,6 +12,7 @@ import { InicioSesionComponent } from './pages/auth/inicio-sesion/inicio-sesion.
 import { authGuard } from './services/guards/auth.guard';
 import { Pagina404Component } from './pages/pagina404/pagina404.component';
 import { ExitoNuevoUsuarioComponent } from './pages/auth/exito-nuevo-usuario/exito-nuevo-usuario.component';
+import { ServerErrorComponent } from './pages/server-error/server-error.component';
 
 
 export const routes: Routes = [
@@ -27,6 +28,7 @@ export const routes: Routes = [
     {path:'exitoNuevo', component:ExitoNuevoUsuarioComponent},
     {path:"quienes-somos", component:NosotrosDevsComponent},
     {path:"contacto", component:ContactoComponent},
+    {path:"serverError", component:ServerErrorComponent},
     {path:'**', component:Pagina404Component},
 
 
