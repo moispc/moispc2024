@@ -72,8 +72,11 @@
               @if(Email?.hasError('required')) {
               <p class="text-danger">El correo electrónico es requerido</p>
               } @else if(Email?.hasError('email') ){
-              <p class="text-danger">Ingrese un mail válido</p>
-              } }
+              <p class="text-danger">Ingrese un mail válido</p>}
+              }
+              @if(emailExistente){
+              <p class="text-danger" >El correo electrónico ya está registrado.</p>
+              } 
             </div>
 
             <div class="mb-3 input-container">
