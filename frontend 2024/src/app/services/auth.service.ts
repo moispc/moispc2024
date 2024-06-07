@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/appUSERS/';
+  private apiUrl = 'appUSERS/';
   private authStatusSubject = new BehaviorSubject<boolean>(this.hasToken());
   authStatus$ = this.authStatusSubject.asObservable();
 

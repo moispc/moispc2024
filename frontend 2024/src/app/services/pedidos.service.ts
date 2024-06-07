@@ -10,7 +10,7 @@ import { CarritoComponent } from '../pages/carrito/carrito.component';
 })
 export class PedidosService {
 
-  url:string="http://localhost:8000/appCART/";
+  url:string="appCART/";
 
   // private cerrarSidebarSubject=new Subject<boolean>();
   // private actualizarCarritoSubject=new Subject<void>();
@@ -24,57 +24,30 @@ export class PedidosService {
   }
 
   getDetallePedido():Observable <Carrito[]> {
-    const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken')
-    })
-    return this.http.get<Carrito[]>(this.url + 'ver', {headers});
+    
+    return this.http.get<Carrito[]>(this.url + 'ver');
   }
 
   confirmarPedido():Observable<any>{
     const hola={};
-    const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken'),
-      'Content-Type':'aplication/json'
-    })
-    return this.http.post(this.url + 'confirmar/',hola, {headers});
+   
+    return this.http.post(this.url + 'confirmar/',hola);
   }
 
   deleteDetallePedido(detalle:Carrito):Observable<void>{
    
-    const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken')
-      
-    })
-    return this.http.delete<void>(this.url + 'eliminar/'+detalle.id, {headers})
+    
+    return this.http.delete<void>(this.url + 'eliminar/'+detalle.id)
 
   }
 
   public agregarProducto(product:DetallePedido):Observable<any> {
     
-    const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken'),
-      
-
-    });
+ 
    
-    return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product ,{headers} );
+    return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product  );
   }
 
-  // public updatePedido(product:Pedido):Observable<Pedido> {
-  //   return this.http.put<Pedido>(this.url + '/products/' + product.id_producto, product);
-  // }
 
-  // public deleteProduct(product:Producto):Observable<Producto> {
-  //   return this.http.delete<Producto>(this.url + '/products/' + product.id_producto);
-  // }
-
-  // tiggerActualizarCarrito(){
-  //   this.actualizarCarritoSubject.next();
-  // }
-
-  // triggerCerrarSidebar(visible:boolean){
-    
-  //   this.cerrarSidebarSubject.next(visible);
-  // }
 
 }
