@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +14,7 @@ import { AuthService } from '../../services/auth.service';
 export class NavComponent implements OnInit {
   estaAutenticado=false;
 
-  constructor(private authservice:AuthService) {
+  constructor(private authservice:AuthService, private toastr:ToastrService) {
 
   }
   ngOnInit(): void {
@@ -24,12 +25,8 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.authservice.logout();
-    // localStorage.removeItem('authToken');
-    // localStorage.removeItem('idUser')
-    // this.estaAutenticado = false;
+    this.toastr.info("Se cerró la sesión correctamente");
+  
   }
 
-  // refreshPage() {
-  //   window.location.reload();
-  // }
 }

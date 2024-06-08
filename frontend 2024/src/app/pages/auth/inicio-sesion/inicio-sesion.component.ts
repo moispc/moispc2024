@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {ReactiveFormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 // AuthService
 // Router
@@ -18,7 +19,8 @@ export class InicioSesionComponent {
   errorMensaje: string="";
   constructor(private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr:ToastrService
   ) {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required], []],
@@ -41,6 +43,7 @@ export class InicioSesionComponent {
       // Llamar al servicio de autenticación
       this.authService.login(this.Email?.value, this.Password?.value).subscribe({
         next:(success)=> {
+          
           // Redirigir al dashboard después de una autenticación exitosa
           this.router.navigate(['/home']);
         },

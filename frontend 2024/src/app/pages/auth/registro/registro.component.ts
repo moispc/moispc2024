@@ -9,6 +9,7 @@ import {
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse, HttpHeaderResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registro',
@@ -24,7 +25,8 @@ export class RegistroComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService
   ) {
     this.form = this.formBuilder.group({
       nombre: ['', [Validators.required]],
@@ -54,12 +56,14 @@ export class RegistroComponent implements OnInit {
 
       this.userService.addUser(this.usuario).subscribe({
         next: (data) => {
+          this.toastr.success("Usuario registrado correctamente. Inicie sesión con sus nuevas credenciales.");
   
           this.router.navigate(['exitoNuevo']);
         },
         error: (err: HttpErrorResponse) => {
           
           if (err.error && err.error.email) {
+            
             this.emailExistente = true;
             
           }
@@ -71,7 +75,7 @@ export class RegistroComponent implements OnInit {
       
     } else {
       this.form.markAllAsTouched();
-      console.log('error en formulario');
+    
     }
   }
 
