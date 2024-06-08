@@ -48,7 +48,7 @@ export class CartaComponent implements OnInit {
         this.productos = productos;
       },
       error: (error) => {
-        console.error(error);
+        if (error.status === 0) this.router.navigate(['serverError']);
       },
     });
   }
@@ -60,7 +60,7 @@ export class CartaComponent implements OnInit {
       this.producto = producto;
       this.calcularSubtotal();
     } else {
-      console.log('no está logueado');
+      
       this.router.navigate(['/login']);
     }
   }
@@ -87,7 +87,7 @@ export class CartaComponent implements OnInit {
         this.cerrarModal();
       },
       error: (error) => {
-        console.error(error);
+        if (error.status === 0) this.router.navigate(['serverError']);
       },
     });
   }

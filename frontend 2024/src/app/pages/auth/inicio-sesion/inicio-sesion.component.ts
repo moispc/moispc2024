@@ -15,6 +15,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class InicioSesionComponent {
   form!: FormGroup;
+  errorMensaje: string="";
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService
@@ -38,13 +39,14 @@ export class InicioSesionComponent {
 
     if (this.form.valid) {
       // Llamar al servicio de autenticación
-      this.authService.login(this.Email?.value, this.Password?.value).subscribe(success => {
-        if (success) {
+      this.authService.login(this.Email?.value, this.Password?.value).subscribe({
+        next:(success)=> {
           // Redirigir al dashboard después de una autenticación exitosa
           this.router.navigate(['/home']);
-        } else {
+        },
+        error:(error)=> {
           // Mostrar un mensaje de error o manejar el fallo de autenticación
-          console.error('Email o contraseña incorrectos');
+          this.errorMensaje=error;
         }
       });
     } else {
