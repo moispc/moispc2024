@@ -9,9 +9,7 @@
     <p class="fs-1 fw-bold title text-center">Mi Carrito</p>
 
     @if (detallePedido.length==0) {
-    <p class="h3 text-center title">
-      El carrito está vacio. 
-    </p>
+    <p class="h3 text-center title">El carrito está vacio.</p>
     }
     <div class="sidebar-items">
       <ul class="shop-list" style="list-style-type: none">
@@ -21,7 +19,8 @@
         >
           <div class="card-content row">
             <div class="img-container img-thumbnail col-5 align-items-center">
-              <img class="object-fit-fill border rounded"
+              <img
+                class="object-fit-fill border rounded"
                 [src]="detalle.imageURL"
                 alt="{{ detalle.producto }}"
                 id="imageProducto"
@@ -50,9 +49,10 @@
       </ul>
     </div>
     @if (detallePedido.length!=0) {
-      <p class="h5 bg-info-subtle text-info-emphasis text-end total">Total a abonar : $ {{total}}<a style="font-size: small;">(iva Incluido)</a></p>
-      
-
+    <p class="h5 bg-info-subtle text-info-emphasis text-end total">
+      Total a abonar : $ {{ total
+      }}<a style="font-size: small">(iva Incluido)</a>
+    </p>
 
     <div class="btn-group" role="group" aria-label="Basic example">
       <!-- <button type="button" class="btn btn-secondary">Vaciar Carrito</button> -->
@@ -63,6 +63,6 @@
         Confirmar Compra
       </button>
     </div>
-  }
+    }
   </div>
 </aside>
