@@ -3,14 +3,10 @@ import { NgFor } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
 import { Carrito } from '../../model/Carrito.model';
 import { Router } from '@angular/router';
-import { CartaComponent } from '../carta/carta.component';
-CartaComponent;
-Router;
-
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-carrito',
   standalone: true,
