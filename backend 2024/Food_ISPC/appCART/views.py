@@ -121,16 +121,37 @@ class VerDashboard(APIView):
     def get(self, request):
         usuario = request.user
         id_usuario = usuario.id_usuario
-        vistaPedidos = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario)
-        print("holo")
+        pedidos_pendientes = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario, estado='Pendiente' )
+        pedidos_aprobados = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario, estado='Aprobado por Chayanne')
+        pedidos_entregados = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario, estado='Entregado' )
 
-        carrito_data = [
+        dashbord = {
+            "pendientes": [
             {
                 "fecha_pedido": pedido.fecha_pedido,
                 "direccion_entrega": pedido.direccion_entrega,
                 "estado":pedido.estado,
                 "detalles": DetallePedidoSerializer(pedido.detalles.all(), many=True).data
                 } 
-                        for pedido in vistaPedidos]
+                        for pedido in pedidos_pendientes],
+            "aprobados": [
+            {
+                "fecha_pedido": pedido.fecha_pedido,
+                "direccion_entrega": pedido.direccion_entrega,
+                "estado": "Aprobado",
+                "detalles": DetallePedidoSerializer(pedido.detalles.all(), many=True).data
+                } 
+                        for pedido in pedidos_aprobados],
+            "entregados": [
+            {
+                "fecha_pedido": pedido.fecha_pedido,
+                "direccion_entrega": pedido.direccion_entrega,
+                "estado": "Entregado",
+                "detalles": DetallePedidoSerializer(pedido.detalles.all(), many=True).data
+                } 
+                        for pedido in pedidos_entregados],
 
-        return Response( { "results": carrito_data} )
+        }
+
+
+        return Response( dashbord )
