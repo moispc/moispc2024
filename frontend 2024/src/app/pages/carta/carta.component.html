@@ -1,8 +1,7 @@
 <!-- <div class="bloqueo" *ngIf="brilloBajado"></div> -->
 <h1 class="title">Conoce nuestra variedad de comidas.</h1>
 
-@if(estaLogueado())
-{
+@if(estaLogueado()) {
 <button
   class="btn-carrito"
   aria-label="mostrar carrito de compras"
@@ -16,7 +15,10 @@
     <div
       class="row justify-content-center mb-3"
       id="wrapper_box"
-      *ngFor="let product of productos"
+      *ngFor="
+        let product of productos
+          | paginate : { itemsPerPage: 4, currentPage: p }
+      "
     >
       <div class="col-md-12 col-xl-10">
         <div class="card shadow-0 border rounded-3">
@@ -45,7 +47,7 @@
                   </div>
                   <span>310</span>
                 </div>
-                <div class="mt-1 mb-0 text-muted small">
+                <!-- <div class="mt-1 mb-0 text-muted small">
                   <span>100% cotton</span>
                   <span class="text-primary"> • </span>
                   <span>Light weight</span>
@@ -58,7 +60,7 @@
                   <span>For men</span>
                   <span class="text-primary"> • </span>
                   <span>Casual<br /></span>
-                </div>
+                </div> -->
                 <p class="text-truncate mb-4 mb-md-0">
                   {{ product.descripcion }}
                 </p>
@@ -76,9 +78,9 @@
                     ><s>{{ "$ " + (product.precio * 1.3).toFixed(0) }}</s></span
                   >
                 </div>
+                @if(product.stock>0){
                 <h6 class="text-success">Disponible</h6>
                 <div class="d-flex flex-column mt-4">
-                  
                   <button
                     class="btn btn-outline-primary btn-sm mt-2"
                     (click)="cargarModal(product)"
@@ -87,12 +89,32 @@
                     Añadir al carrito
                   </button>
                 </div>
+                } @else {
+                <h6 class="text-danger">Sin Stock</h6>
+                <div class="d-flex flex-column mt-4">
+                  <button
+                    class="btn btn-outline-primary btn-sm mt-2"
+                    (click)="cargarModal(product)"
+                    type="button"
+                    disabled
+                  >
+                    Añadir al carrito
+                  </button>
+                </div>
+                }
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <pagination-controls
+      
+      (pageChange)="p = $event"
+      [autoHide]="true"
+      [responsive]="true"
+      class="paginationControls text-center"
+    ></pagination-controls>
   </div>
 </section>
 

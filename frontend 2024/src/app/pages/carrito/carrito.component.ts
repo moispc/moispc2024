@@ -3,12 +3,10 @@ import { NgFor } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
 import { Carrito } from '../../model/Carrito.model';
 import { Router } from '@angular/router';
-import { CartaComponent } from '../carta/carta.component';
-CartaComponent
-Router
-
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-carrito',
   standalone: true,
@@ -26,7 +24,8 @@ export class CarritoComponent implements OnInit, OnDestroy {
   constructor(
     private pedidoservice: PedidosService,
     private carritoService: CarritoService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -35,11 +34,13 @@ export class CarritoComponent implements OnInit, OnDestroy {
         this.isVisible = visible;
       }
     );
-    this.carritoService.actualizarCarrito$.subscribe(() => {
-      this.cargarDetalle();
-    });
+    if (localStorage.getItem('authToken') != null) {
+      this.carritoService.actualizarCarrito$.subscribe(() => {
+        this.cargarDetalle();
+      });
 
-    this.cargarDetalle();
+      this.cargarDetalle();
+    }
   }
 
   ngOnDestroy() {
@@ -51,7 +52,6 @@ export class CarritoComponent implements OnInit, OnDestroy {
   sidebarVisible: boolean = false;
 
   cerrarSidebar() {
-
     this.sidebarVisible = !this.sidebarVisible;
     this.carritoService.toggleCarrito();
   }
@@ -66,30 +66,27 @@ export class CarritoComponent implements OnInit, OnDestroy {
         }
       },
       error: (error) => {
+        this.toastr.error('Ocurrió un error inesperado.' + error);
+
         console.error(error);
       },
     });
   }
 
-  irAPagar()
-  {
+  irAPagar() {
     this.cerrarSidebar();
     this.router.navigate(['/pagar']);
-
-    // alert("Se intenta pagar");
   }
 
-  eliminarDetalle(detalle:Carrito){
-
+  eliminarDetalle(detalle: Carrito) {
     this.pedidoservice.deleteDetallePedido(detalle).subscribe({
       next: () => {
-
+        this.toastr.success('Se eliminó el producto del carrito');
         this.cargarDetalle();
       },
       error: (error) => {
-        console.error(error);
+        this.toastr.error(error);
       },
     });
   }
-
 }

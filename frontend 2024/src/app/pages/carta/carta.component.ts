@@ -10,13 +10,14 @@ import { CarritoComponent } from '../carrito/carrito.component';
 import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-carta',
   standalone: true,
-  imports: [NgFor, CommonModule, FormsModule, CarritoComponent],
+  imports: [NgFor, CommonModule, FormsModule, CarritoComponent, NgxPaginationModule],
   templateUrl: './carta.component.html',
   styleUrl: './carta.component.css',
 })
@@ -25,13 +26,15 @@ export class CartaComponent implements OnInit {
   productos: Producto[] = [];
   cantidadIngresada: number = 1;
   subtotal: number = 0;
+  p: number = 1;
 
   constructor(
     productService: ProductsService,
     private pedidoService: PedidosService,
     private carritoService: CarritoService,
     private authService: AuthService,
-    private router: Router
+    private router: Router, 
+    private toastr:ToastrService
   ) {
     this.producto = {
       id_producto: 0,
@@ -45,6 +48,7 @@ export class CartaComponent implements OnInit {
 
     productService.getProducts().subscribe({
       next: (productos: Producto[]) => {
+        
         this.productos = productos;
       },
       error: (error) => {
@@ -56,11 +60,13 @@ export class CartaComponent implements OnInit {
 
   cargarModal(producto: Producto) {
     if (this.estaLogueado()) {
+      
+      
       this.abrirModal();
       this.producto = producto;
       this.calcularSubtotal();
     } else {
-      
+      this.toastr.info("Se requiere el inicio de sesión");
       this.router.navigate(['/login']);
     }
   }
@@ -82,11 +88,15 @@ export class CartaComponent implements OnInit {
     );
     this.pedidoService.agregarProducto(detallePedido).subscribe({
       next: () => {
+        this.toastr.success("Se agregó el producto al carrito");
+
         this.carritoService.tiggerActualizarCarrito();
         this.toggleCarrito();
         this.cerrarModal();
       },
       error: (error) => {
+        this.toastr.error("Ocurrió un error inesperado.");
+
         if (error.status === 0) this.router.navigate(['serverError']);
       },
     });
