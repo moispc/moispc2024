@@ -20,11 +20,11 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     // Simula una llamada HTTP POST a tu API de autenticación
-    return this.http.post<{ token: string, user_id: string, nombre:string, apellido:string }>(`${this.apiUrl}login/`, { email, password }).pipe(
+    return this.http.post<{ access: string, user_id: string, nombre:string, apellido:string }>(`${this.apiUrl}login/`, { email, password }).pipe(
       map(response => {
         // Guardar el token en localStorage o en algún lugar seguro
        
-        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('authToken', response.access);
         localStorage.setItem('idUser', response.user_id);
         this.authStatusSubject.next(true); // Notifica el cambio de estado de autenticación
         this.toastr.success("Bienvenido "+response.nombre+' '+response.apellido+'!');
