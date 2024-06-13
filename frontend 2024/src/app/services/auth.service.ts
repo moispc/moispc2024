@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -27,8 +27,9 @@ export class AuthService {
 
         localStorage.setItem('authToken', response.access);
         localStorage.setItem('idUser', response.user_id);
+        localStorage.setItem('nameUser', response.nombre+' '+response.apellido);
         this.authStatusSubject.next(true); // Notifica el cambio de estado de autenticación
-        this.toastr.success("Bienvenido "+response.nombre+' '+response.apellido+'!');
+        this.toastr.success("Bienvenida/o "+response.nombre+' '+response.apellido+'!');
         return response;
 
       })
@@ -40,10 +41,13 @@ export class AuthService {
     localStorage.removeItem('nameUser');
     localStorage.removeItem('authToken');
     localStorage.removeItem('idUser');
+    localStorage.removeItem('nameUser');
     this.authStatusSubject.next(false); // Notifica el cambio de estado de autenticación
   }
 
   isAuthenticated(): Observable<boolean> {
     return this.authStatus$;
   }
+
+ 
 }

@@ -17,7 +17,13 @@ declare var bootstrap: any;
 @Component({
   selector: 'app-carta',
   standalone: true,
-  imports: [NgFor, CommonModule, FormsModule, CarritoComponent, NgxPaginationModule],
+  imports: [
+    NgFor,
+    CommonModule,
+    FormsModule,
+    CarritoComponent,
+    NgxPaginationModule,
+  ],
   templateUrl: './carta.component.html',
   styleUrl: './carta.component.css',
 })
@@ -27,14 +33,14 @@ export class CartaComponent implements OnInit {
   cantidadIngresada: number = 1;
   subtotal: number = 0;
   p: number = 1;
-
+  idUser: number = 0;
   constructor(
-    productService: ProductsService,
+    private productService: ProductsService,
     private pedidoService: PedidosService,
     private carritoService: CarritoService,
     private authService: AuthService,
-    private router: Router, 
-    private toastr:ToastrService
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.producto = {
       id_producto: 0,
@@ -45,10 +51,10 @@ export class CartaComponent implements OnInit {
       stock: 0,
       id_categoria: 0,
     };
-
-    productService.getProducts().subscribe({
+  }
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe({
       next: (productos: Producto[]) => {
-        
         this.productos = productos;
       },
       error: (error) => {
@@ -56,17 +62,14 @@ export class CartaComponent implements OnInit {
       },
     });
   }
-  ngOnInit(): void {}
 
   cargarModal(producto: Producto) {
     if (this.estaLogueado()) {
-      
-      
       this.abrirModal();
       this.producto = producto;
       this.calcularSubtotal();
     } else {
-      this.toastr.info("Se requiere el inicio de sesión");
+      this.toastr.info('Se requiere el inicio de sesión');
       this.router.navigate(['/login']);
     }
   }
@@ -79,23 +82,26 @@ export class CartaComponent implements OnInit {
   }
 
   addProducto() {
+    if (localStorage.getItem('userId') != null) {
+      this.idUser = parseFloat(localStorage.getItem('userId')!);
+    }
     const detallePedido = new DetallePedido(
-      1,
+      this.idUser,
       0,
       this.producto.id_producto,
       this.cantidadIngresada,
       'Gerónico 1257'
     );
-    this.pedidoService.agregarProducto(detallePedido).subscribe({
-      next: () => {
-        this.toastr.success("Se agregó el producto al carrito");
 
+    this.pedidoService.agregarProducto(detallePedido).subscribe({
+      next: (pedido) => {
         this.carritoService.tiggerActualizarCarrito();
+        this.toastr.success(pedido.message);
         this.toggleCarrito();
         this.cerrarModal();
       },
       error: (error) => {
-        this.toastr.error("Ocurrió un error inesperado.");
+        this.toastr.error('Ocurrió un error inesperado.');
 
         if (error.status === 0) this.router.navigate(['serverError']);
       },
