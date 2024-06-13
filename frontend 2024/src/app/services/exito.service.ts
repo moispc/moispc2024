@@ -6,7 +6,7 @@ import { Pedido } from '../model/pedido.model';
 import { Carrito } from '../model/Carrito.model';
 import { DetallePedido } from '../model/detallePedido.model';
 
-
+//no hace falta el servicio
 
 @Injectable({
   providedIn: 'root'
