@@ -2,9 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
 import { Carrito } from '../../model/Carrito.model';
-import { Router } from '@angular/router';
+
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription } from 'rxjs';
+
+import { Pedido } from '../../model/pedido.model';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -21,9 +25,11 @@ export class CarritoComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
   isVisible: boolean = false;
+
   constructor(
-    private pedidoservice: PedidosService,
+    private pedidoService: PedidosService,
     private carritoService: CarritoService,
+    private authService: AuthService,
     private router: Router,
     private toastr: ToastrService
   ) {}
@@ -34,13 +40,18 @@ export class CarritoComponent implements OnInit, OnDestroy {
         this.isVisible = visible;
       }
     );
-    if (localStorage.getItem('authToken') != null) {
-      this.carritoService.actualizarCarrito$.subscribe(() => {
-        this.cargarDetalle();
-      });
 
-      this.cargarDetalle();
-    }
+    this.carritoService.actualizarCarrito$.subscribe({
+      next:()=>{
+      if (localStorage.getItem('authToken') != null) {
+        this.cargarDetalle();
+      }},
+      error:(error)=>{
+        console.log(error);
+      }
+    });
+
+    
   }
 
   ngOnDestroy() {
@@ -57,7 +68,7 @@ export class CarritoComponent implements OnInit, OnDestroy {
   }
 
   public cargarDetalle() {
-    this.pedidoservice.getDetallePedido().subscribe({
+    this.pedidoService.getDetallePedido().subscribe({
       next: (detalle: Carrito[]) => {
         this.total = 0;
         this.detallePedido = detalle;
@@ -66,20 +77,36 @@ export class CarritoComponent implements OnInit, OnDestroy {
         }
       },
       error: (error) => {
-        this.toastr.error('Ocurrió un error inesperado.' + error);
-
-        console.error(error);
+        if (error.error.detail == 'Given token not valid for any token type') {
+          this.toastr.info(
+            'Su sesión a expirado. Debe iniciar sesión nuevamente'
+          );
+          this.authService.logout();
+        }
       },
     });
   }
 
   irAPagar() {
+    let nameUser: any = localStorage.getItem('nameUser')
+      ? localStorage.getItem('nameUser')
+      : 'Sin nombre';
+
+    let pedido: Pedido = new Pedido(
+      1,
+      this.total,
+      'Pedido realizado',
+      'Gerónico 1257',
+      nameUser,
+      this.detallePedido
+    );
+    this.pedidoService.setPedido(pedido);
     this.cerrarSidebar();
     this.router.navigate(['/pagar']);
   }
 
   eliminarDetalle(detalle: Carrito) {
-    this.pedidoservice.deleteDetallePedido(detalle).subscribe({
+    this.pedidoService.deleteDetallePedido(detalle).subscribe({
       next: () => {
         this.toastr.success('Se eliminó el producto del carrito');
         this.cargarDetalle();
