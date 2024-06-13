@@ -10,6 +10,7 @@ import { Pedido } from '../../model/pedido.model';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Pedido } from '../../model/pedido.model';
 
 @Component({
   selector: 'app-carrito',
@@ -89,6 +90,7 @@ export class CarritoComponent implements OnInit, OnDestroy {
 
   irAPagar() {
     let nameUser: any = localStorage.getItem('nameUser')
+
       ? localStorage.getItem('nameUser')
       : 'Sin nombre';
 
@@ -103,6 +105,7 @@ export class CarritoComponent implements OnInit, OnDestroy {
     this.pedidoService.setPedido(pedido);
     this.cerrarSidebar();
     this.router.navigate(['/pagar']);
+
   }
 
   eliminarDetalle(detalle: Carrito) {

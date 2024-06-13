@@ -23,7 +23,8 @@ export class AuthService {
     return this.http.post<{ access: string, user_id: string, nombre:string, apellido:string }>(`${this.apiUrl}login/`, { email, password }).pipe(
       map(response => {
         // Guardar el token en localStorage o en algún lugar seguro
-       
+        localStorage.setItem('nameUser', response.nombre+' '+response.apellido);
+
         localStorage.setItem('authToken', response.access);
         localStorage.setItem('idUser', response.user_id);
         localStorage.setItem('nameUser', response.nombre+' '+response.apellido);
@@ -36,7 +37,8 @@ export class AuthService {
   }
 
   logout() {
-    // Eliminar el token de autenticación
+  
+    localStorage.removeItem('nameUser');
     localStorage.removeItem('authToken');
     localStorage.removeItem('idUser');
     localStorage.removeItem('nameUser');
