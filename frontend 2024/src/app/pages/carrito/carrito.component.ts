@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Pedido } from '../../model/pedido.model';
 
 @Component({
   selector: 'app-carrito',
@@ -22,7 +23,7 @@ export class CarritoComponent implements OnInit, OnDestroy {
 
   isVisible: boolean = false;
   constructor(
-    private pedidoservice: PedidosService,
+    private pedidoService: PedidosService,
     private carritoService: CarritoService,
     private router: Router,
     private toastr: ToastrService
@@ -57,7 +58,7 @@ export class CarritoComponent implements OnInit, OnDestroy {
   }
 
   public cargarDetalle() {
-    this.pedidoservice.getDetallePedido().subscribe({
+    this.pedidoService.getDetallePedido().subscribe({
       next: (detalle: Carrito[]) => {
         this.total = 0;
         this.detallePedido = detalle;
@@ -74,12 +75,25 @@ export class CarritoComponent implements OnInit, OnDestroy {
   }
 
   irAPagar() {
-    this.cerrarSidebar();
-    this.router.navigate(['/pagar']);
+    let nameUser: any = localStorage.getItem('nameUser')
+    ? localStorage.getItem('nameUser')
+    : 'Sin nombre';
+
+  let pedido: Pedido = new Pedido(
+    1,
+    this.total,
+    'Pedido realizado',
+    'Gerónico 1257',
+    nameUser,
+    this.detallePedido
+  );
+  this.pedidoService.setPedido(pedido);
+  this.cerrarSidebar();
+  this.router.navigate(['/pagar']);
   }
 
   eliminarDetalle(detalle: Carrito) {
-    this.pedidoservice.deleteDetallePedido(detalle).subscribe({
+    this.pedidoService.deleteDetallePedido(detalle).subscribe({
       next: () => {
         this.toastr.success('Se eliminó el producto del carrito');
         this.cargarDetalle();
