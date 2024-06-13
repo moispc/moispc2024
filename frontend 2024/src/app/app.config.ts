@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
       timeOut: 3000, 
       preventDuplicates: true,
       enableHtml:true,
-      progressBar:true,
+      
       countDuplicates:true,
       closeButton:true,
       positionClass:'toast-bottom-right'}),
