@@ -23,11 +23,11 @@ export interface IPedido {
 }
 
 export interface IPedidosData {
-  pedidos:{
+  
     pendientes: IPedido[];
     aprobados: IPedido[];
     entregados: IPedido[];
-  }
+  
 
 }
 
@@ -40,6 +40,7 @@ export class DashboardService {
   constructor(private http: HttpClient) { }
 
   obtenerPedidos(): Observable<IPedidosData> {
+    
     return this.http.get<IPedidosData>(this.apiUrl);
   }
 

@@ -1,5 +1,5 @@
 <div class="dash">
-  <h1>Hola Pepe, Bienvenido a tu Panel de control</h1>
+  <h1>Hola {{nombre}}, Bienvenido a tu Panel de control</h1>
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <button class="nav-link" [class.active]="activeTab === 'Pendientes'" (click)="setActiveTab('Pendientes')">Pendientes</button>
