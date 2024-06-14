@@ -4,10 +4,15 @@ import { Observable } from 'rxjs';
 Observable
 HttpClient
 
+export interface IProducto {
+nombre_producto: string;
+}
+
 export interface IDetalle {
   cantidad_productos: number;
   precio_producto: number;
   subtotal: number;
+  producto: IProducto;
 }
 
 export interface IPedido {
@@ -18,9 +23,12 @@ export interface IPedido {
 }
 
 export interface IPedidosData {
-  pendientes: IPedido[];
-  aprobados: IPedido[];
-  entregados: IPedido[];
+  pedidos:{
+    pendientes: IPedido[];
+    aprobados: IPedido[];
+    entregados: IPedido[];
+  }
+
 }
 
 @Injectable({

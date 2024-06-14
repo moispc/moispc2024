@@ -19,7 +19,7 @@
           <th>Fecha</th>
           <th>Dirección de Entrega</th>
           <th>Estado</th>
-          <th>Cantidad</th>
+          <th>Producto</th>
           <th>Precio Unitario</th>
           <th>Subtotal</th>
         </tr>
@@ -32,13 +32,16 @@
           <td>
             <ul>
               <li *ngFor="let detalle of pedido.detalles">
-                {{ detalle.cantidad_productos }}
+                {{ detalle.cantidad_productos }} - {{detalle.producto["nombre_producto"]}}
               </li>
             </ul>
           </td>
           <td>
             <ul>
+
               <li *ngFor="let detalle of pedido.detalles">
+
+
                 {{ detalle.precio_producto | currency:'ARS' }}
               </li>
             </ul>
