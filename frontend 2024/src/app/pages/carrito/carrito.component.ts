@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Pedido } from '../../model/pedido.model';
 declare var bootstrap: any;
 
 @Component({
