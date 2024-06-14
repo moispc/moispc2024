@@ -125,8 +125,9 @@ class VerDashboard(APIView):
         pedidos_aprobados = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario, estado='Aprobado por Chayanne')
         pedidos_entregados = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario, estado='Entregado' )
 
-        dashbord = {
-            "pendientes": [
+        pedidos = {
+            "pedidos": {
+                "pendientes": [
             {
                 "fecha_pedido": pedido.fecha_pedido,
                 "direccion_entrega": pedido.direccion_entrega,
@@ -151,7 +152,9 @@ class VerDashboard(APIView):
                 } 
                         for pedido in pedidos_entregados],
 
-        }
+        
+            }
+            }
 
 
-        return Response( dashbord )
+        return Response( pedidos )
