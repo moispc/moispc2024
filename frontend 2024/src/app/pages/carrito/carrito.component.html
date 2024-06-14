@@ -7,7 +7,7 @@
       (click)="cerrarSidebar()"
     ></button>
     <p class="fs-1 fw-bold title text-center">Mi Carrito</p>
-
+    @if (detallePedido.length!=0) {
     <hr />
     
     
@@ -33,6 +33,7 @@
       Modificar
     </button>
   }
+}
     <hr />
     @if (detallePedido.length==0) {
     <p class="h3 text-center title">El carrito está vacio.</p>
@@ -125,6 +126,10 @@
               placeholder="Ingrese su domicilio"
               formControlName="domicilio"
             />
+            @if(Domicilio?.errors && Domicilio?.touched) {
+              @if(Domicilio?.hasError('required')) {
+              <p class="text-danger">El domicilio es requerido</p>
+              } }
           </div>
           <div class="mb-3">
             <label for="info" class="form-label">Información adicional:</label>

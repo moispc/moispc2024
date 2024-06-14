@@ -90,7 +90,7 @@ export class CartaComponent implements OnInit {
       0,
       this.producto.id_producto,
       this.cantidadIngresada,
-      'Gerónico 1257'
+      'Sin especificar'
     );
 
     this.pedidoService.agregarProducto(detallePedido).subscribe({

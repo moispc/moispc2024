@@ -2,11 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { PedidosService } from '../../services/pedidos.service';
 import { Carrito } from '../../model/Carrito.model';
-
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription } from 'rxjs';
-
-
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -67,8 +64,6 @@ export class CarritoComponent implements OnInit, OnDestroy {
         console.log(error);
       },
     });
-
-
   }
 
   ngOnDestroy() {
@@ -166,5 +161,9 @@ export class CarritoComponent implements OnInit, OnDestroy {
         new bootstrap.Modal(modalElement);
       modalInstance.show();
     }
+  }
+
+  get Domicilio() {
+    return this.form.get('domicilio');
   }
 }
