@@ -1,21 +1,63 @@
-<div class="dashboard">
-    
-    <div class="animate">
-    <header>
-        <h1> Bienvenidos a nuestro Dashboard </h1>
-    </header>
+<div class="dash">
+  <h1>Hola {{nombre}}, Bienvenido a tu Panel de control</h1>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab === 'Pendientes'" (click)="setActiveTab('Pendientes')">Pendientes</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab === 'Aprobados'" (click)="setActiveTab('Aprobados')">Aprobados</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="activeTab === 'Entregados'" (click)="setActiveTab('Entregados')">Entregados</button>
+    </li>
+  </ul>
 
-    <div>
-       <app-historial></app-historial>
-    </div>
+  <div *ngIf="pedidosFiltrados.length > 0" class="table-responsive mt-3">
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Dirección de Entrega</th>
+          <th>Estado</th>
+          <th>Producto</th>
+          <th>Precio Unitario</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidosFiltrados">
+          <td>{{ pedido.fecha_pedido | date }}</td>
+          <td>{{ pedido.direccion_entrega }}</td>
+          <td>{{ pedido.estado }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let detalle of pedido.detalles">
+                {{ detalle.cantidad_productos }} - {{detalle.producto["nombre_producto"]}}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <ul>
 
-    <div>
-        <app-states></app-states>
-    </div>
+              <li *ngFor="let detalle of pedido.detalles">
 
-    <div>
-        <app-pedidos></app-pedidos>
-    </div>
-    </div>
 
+                {{ detalle.precio_producto | currency:'ARS' }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let detalle of pedido.detalles">
+                {{ detalle.subtotal | currency:'ARS' }}
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="pedidosFiltrados.length === 0">
+    <p>No hay pedidos con el estado seleccionado.</p>
+  </div>
 </div>

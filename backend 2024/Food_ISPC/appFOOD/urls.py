@@ -1,15 +1,8 @@
 
-from django.urls import path,include
-from rest_framework.routers import DefaultRouter
-from .views import ProductoViewSet
-
-router = DefaultRouter()
-router.register('', ProductoViewSet )
-
-app_name = 'producto'
-
-
+from django.urls import path
+from .views import ProductoViewSet, ProductoByIdViewSet
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', ProductoViewSet.as_view()),
+    path('<int:id_producto>', ProductoByIdViewSet.as_view())
 ]

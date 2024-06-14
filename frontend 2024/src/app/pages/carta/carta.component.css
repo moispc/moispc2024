@@ -65,6 +65,11 @@ body {
   width: 600px;
 }
 
+.paginationControls{
+  color:white;
+
+}
+
 @media (min-width: 769px) {
   .card-t {
     margin: auto;

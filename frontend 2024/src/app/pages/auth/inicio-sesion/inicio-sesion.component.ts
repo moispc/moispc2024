@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {ReactiveFormsModule, FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 // AuthService
 // Router
@@ -15,9 +16,11 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class InicioSesionComponent {
   form!: FormGroup;
+  errorMensaje: string="";
   constructor(private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr:ToastrService
   ) {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required], []],
@@ -38,13 +41,17 @@ export class InicioSesionComponent {
 
     if (this.form.valid) {
       // Llamar al servicio de autenticación
-      this.authService.login(this.Email?.value, this.Password?.value).subscribe(success => {
-        if (success) {
+      this.authService.login(this.Email?.value, this.Password?.value).subscribe({
+        next:(success)=> {
+          
           // Redirigir al dashboard después de una autenticación exitosa
           this.router.navigate(['/home']);
-        } else {
+        },
+        error:(error)=> {
           // Mostrar un mensaje de error o manejar el fallo de autenticación
-          console.error('Email o contraseña incorrectos');
+
+          this.errorMensaje="El usuario o contraseña es incorrecto";
+          this.form.markAllAsTouched();
         }
       });
     } else {

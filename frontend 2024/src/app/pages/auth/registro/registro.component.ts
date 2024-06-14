@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse, HttpHeaderResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registro',
@@ -19,10 +21,12 @@ import { Router } from '@angular/router';
 export class RegistroComponent implements OnInit {
   usuario: Usuario = new Usuario();
   form: FormGroup;
+  emailExistente: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService
   ) {
     this.form = this.formBuilder.group({
       nombre: ['', [Validators.required]],
@@ -37,15 +41,7 @@ export class RegistroComponent implements OnInit {
         ],
       ],
       email: ['', [Validators.email, Validators.required]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          
-          
-        ],
-      ],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       checkPassword: ['', [Validators.required]],
     });
   }
@@ -55,27 +51,34 @@ export class RegistroComponent implements OnInit {
   onEnviar(event: Event): void {
     event.preventDefault;
     if (this.form.valid) {
-      
       this.usuario = this.form.value;
-      console.log(this.usuario);
+      
+
       this.userService.addUser(this.usuario).subscribe({
         next: (data) => {
-          console.log(data);
+          this.toastr.success("Usuario registrado correctamente. Inicie sesión con sus nuevas credenciales.");
+  
           this.router.navigate(['exitoNuevo']);
         },
-        error: (err) => {
-          console.log(err);
-        }
+        error: (err: HttpErrorResponse) => {
+          
+          if (err.error && err.error.email) {
+            
+            this.emailExistente = true;
+            
+          }
+
+          if (err.status === 0) this.router.navigate(['serverError']);
+        },
       });
-      this.form.reset();
+
+      
     } else {
       this.form.markAllAsTouched();
-      console.log('error en formulario');
+    
     }
   }
-  registrar() {
-    console.log('entro aca');
-  }
+
 
   get Password() {
     return this.form.get('password');

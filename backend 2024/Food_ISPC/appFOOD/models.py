@@ -24,7 +24,7 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=200)
     precio = models.FloatField()
     stock = models.IntegerField(default = 0 )
-    imageURL = models.CharField( max_length=100, null=True )
+    imageURL = models.CharField( max_length=100 )
     id_categoria = models.ForeignKey(CategoriaProducto, models.DO_NOTHING)
 
     class Meta:

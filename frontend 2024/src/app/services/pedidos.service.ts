@@ -5,76 +5,58 @@ import { Observable, Subject } from 'rxjs';
 import { DetallePedido } from '../model/detallePedido.model';
 import { Carrito } from '../model/Carrito.model';
 import { CarritoComponent } from '../pages/carrito/carrito.component';
+import { Pedido } from '../model/pedido.model';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class PedidosService {
 
-  url:string="http://localhost:8000/appCART/";
+  url:string="appCART/";
+  private pedido: Pedido = new Pedido(0,0,"","","",[]);
 
-  // private cerrarSidebarSubject=new Subject<boolean>();
-  // private actualizarCarritoSubject=new Subject<void>();
-  // actualizarCarrito$=this.actualizarCarritoSubject.asObservable();
-  // cerrarSidebar$=this.cerrarSidebarSubject.asObservable();
-  
+
   constructor(private http:HttpClient) { }
+
+
+  setPedido(pedido: Pedido) {
+    this.pedido = pedido;
+  }
+
+  getPedido() {
+    return this.pedido;
+  }
 
   getPedidos() {
     return this.http.get(this.url + 'pedidos');
   }
 
   getDetallePedido():Observable <Carrito[]> {
-    const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken')
-    })
-    return this.http.get<Carrito[]>(this.url + 'ver', {headers});
+
+    return this.http.get<Carrito[]>(this.url + 'ver');
   }
 
   confirmarPedido():Observable<any>{
     const hola={};
-    const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken'),
-      'Content-Type':'aplication/json'
-    })
-    return this.http.post(this.url + 'confirmar/',hola, {headers});
+
+    return this.http.post(this.url + 'confirmar/',hola);
   }
 
   deleteDetallePedido(detalle:Carrito):Observable<void>{
-   
-    const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken')
-      
-    })
-    return this.http.delete<void>(this.url + 'eliminar/'+detalle.id, {headers})
+
+
+    return this.http.delete<void>(this.url + 'eliminar/'+detalle.id)
 
   }
 
   public agregarProducto(product:DetallePedido):Observable<any> {
-    
-    const headers=new HttpHeaders({
-      'Authorization': 'Token '+localStorage.getItem('authToken'),
-      
 
-    });
-   
-    return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product ,{headers} );
+
+
+    return this.http.post(this.url + 'agregar/'+ product.id_producto+'/',product  );
   }
 
-  // public updatePedido(product:Pedido):Observable<Pedido> {
-  //   return this.http.put<Pedido>(this.url + '/products/' + product.id_producto, product);
-  // }
 
-  // public deleteProduct(product:Producto):Observable<Producto> {
-  //   return this.http.delete<Producto>(this.url + '/products/' + product.id_producto);
-  // }
-
-  // tiggerActualizarCarrito(){
-  //   this.actualizarCarritoSubject.next();
-  // }
-
-  // triggerCerrarSidebar(visible:boolean){
-    
-  //   this.cerrarSidebarSubject.next(visible);
-  // }
 
 }
