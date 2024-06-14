@@ -10,12 +10,18 @@ import { Pedido } from '../../model/pedido.model';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Pedido } from '../../model/pedido.model';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, ReactiveFormsModule],
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css',
 })
@@ -24,16 +30,24 @@ export class CarritoComponent implements OnInit, OnDestroy {
   detallePedidoParcial: Carrito[] = [];
   total: number = 0;
   subscription: Subscription = new Subscription();
-
+  direccion: string = 'Sin especificar';
+  info:string='';
   isVisible: boolean = false;
+  form: FormGroup;
 
   constructor(
     private pedidoService: PedidosService,
     private carritoService: CarritoService,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private formBuilder: FormBuilder
+  ) {
+    this.form = this.formBuilder.group({
+      domicilio: ['', [Validators.required]],
+      info: [''],
+    });
+  }
 
   ngOnInit(): void {
     this.subscription = this.carritoService.carritoVisible$.subscribe(
@@ -43,16 +57,15 @@ export class CarritoComponent implements OnInit, OnDestroy {
     );
 
     this.carritoService.actualizarCarrito$.subscribe({
-      next:()=>{
-      if (localStorage.getItem('authToken') != null) {
-        this.cargarDetalle();
-      }},
-      error:(error)=>{
+      next: () => {
+        if (localStorage.getItem('authToken') != null) {
+          this.cargarDetalle();
+        }
+      },
+      error: (error) => {
         console.log(error);
-      }
+      },
     });
-
-    
   }
 
   ngOnDestroy() {
@@ -89,23 +102,26 @@ export class CarritoComponent implements OnInit, OnDestroy {
   }
 
   irAPagar() {
-    let nameUser: any = localStorage.getItem('nameUser')
+    if ((this.direccion == 'Sin especificar')) {
+      this.toastr.error('Debe especificar el domicilio de entrega');
+      this.abrirModal();
+    } else {
+      let nameUser: any = localStorage.getItem('nameUser')
+        ? localStorage.getItem('nameUser')
+        : 'Sin nombre';
 
-      ? localStorage.getItem('nameUser')
-      : 'Sin nombre';
-
-    let pedido: Pedido = new Pedido(
-      1,
-      this.total,
-      'Pedido realizado',
-      'Gerónico 1257',
-      nameUser,
-      this.detallePedido
-    );
-    this.pedidoService.setPedido(pedido);
-    this.cerrarSidebar();
-    this.router.navigate(['/pagar']);
-
+      let pedido: Pedido = new Pedido(
+        1,
+        this.total,
+        'Pedido realizado',
+        this.direccion+'-'+this.info,
+        nameUser,
+        this.detallePedido
+      );
+      this.pedidoService.setPedido(pedido);
+      this.cerrarSidebar();
+      this.router.navigate(['/pagar']);
+    }
   }
 
   eliminarDetalle(detalle: Carrito) {
@@ -118,5 +134,34 @@ export class CarritoComponent implements OnInit, OnDestroy {
         this.toastr.error(error);
       },
     });
+  }
+
+  onEnviar(event: Event) {
+    event.preventDefault;
+    if (this.form.valid) {
+      this.cerrarModal();
+      this.direccion = this.form.value.domicilio;
+      this.info=this.form.value.info;
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
+  cerrarModal() {
+    const modalElement = document.getElementById('modalCambioDireccion');
+    if (modalElement) {
+      const modalInstance =
+        bootstrap.Modal.getInstance(modalElement) ||
+        new bootstrap.Modal(modalElement);
+      modalInstance.hide();
+    }
+  }
+  abrirModal() {
+    const modalElement = document.getElementById('modalCambioDireccion');
+    if (modalElement) {
+      const modalInstance =
+        bootstrap.Modal.getInstance(modalElement) ||
+        new bootstrap.Modal(modalElement);
+      modalInstance.show();
+    }
   }
 }

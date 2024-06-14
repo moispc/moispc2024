@@ -81,3 +81,16 @@ h3 {
     color: white;
   
 }
+.titleDireccion{
+    color:white;
+    font-size:18px;
+
+}
+.textDireccion{
+    color:white;
+    font-size:15px;
+}
+.textInfo{
+    color:white;
+    font-size:10px;
+}
