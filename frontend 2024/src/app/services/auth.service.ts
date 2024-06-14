@@ -24,7 +24,7 @@ export class AuthService {
       map(response => {
         // Guardar el token en localStorage o en algún lugar seguro
         localStorage.setItem('nameUser', response.nombre+' '+response.apellido);
-
+        
         localStorage.setItem('authToken', response.access);
         localStorage.setItem('idUser', response.user_id);
         localStorage.setItem('nameUser', response.nombre+' '+response.apellido);
