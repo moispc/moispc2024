@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService, IPedido, IPedidosData } from '../../services/dashboard.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 CommonModule
 // import { StatesComponent } from './states/states.component';
 // import { PedidosComponent } from './pedidos/pedidos.component';
@@ -40,16 +42,27 @@ export class DashboardComponent implements OnInit{
   pedidosFiltrados: IPedido[] = [];
   activeTab: string = 'Pendientes';
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(private dashboardService: DashboardService, private authService: AuthService, private toastr: ToastrService) {}
 
 
   ngOnInit(): void {
-    this.dashboardService.obtenerPedidos().subscribe((data: IPedidosData) => {
-      console.log(data); // aca veo los datos! ver si funciona . .
+    this.dashboardService.obtenerPedidos().subscribe({
+      next:(data: IPedidosData) => {
+
       this.pedidosData = data;
       this.setActiveTab(this.activeTab);
-    });
-  }
+    }, error: (error) => {
+      if (error.error.detail == 'Given token not valid for any token type') {
+        this.toastr.info(
+          'Su sesión a expirado. Debe iniciar sesión nuevamente'
+        );
+        this.authService.logout();
+      }
+    },
+  });
+}
+
+
   //filtro los pedidos
   setActiveTab(tab: string): void {
     this.activeTab = tab;
