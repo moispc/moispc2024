@@ -4,29 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 CommonModule
-// import { StatesComponent } from './states/states.component';
-// import { PedidosComponent } from './pedidos/pedidos.component';
-// import { HistorialComponent } from './historial/historial.component';
 
-// export interface IDetalle {
-//   cantidad_productos: number;
-//   precio_producto: number;
-//   subtotal: number;
-// }
-
-
-// export interface IPedido {
-//   fecha_pedido: string;
-//   direccion_entrega: string;
-//   estado: string;
-//   detalles: IDetalle[];
-// }
-
-// export interface IPedidosData {
-//   pendientes: IPedido[];
-//   aprobados: IPedido[];
-//   entregados: IPedido[];
-// }
 
 @Component({
   selector: 'app-dashboard',
@@ -38,17 +16,19 @@ CommonModule
 
 export class DashboardComponent implements OnInit{
 
-  pedidosData: IPedidosData = { pedidos: {pendientes: [], aprobados: [], entregados: []} };
+  pedidosData: IPedidosData = { pendientes: [], aprobados: [], entregados: [] };
   pedidosFiltrados: IPedido[] = [];
   activeTab: string = 'Pendientes';
-
+nombre:string = '';
   constructor(private dashboardService: DashboardService, private authService: AuthService, private toastr: ToastrService) {}
 
 
   ngOnInit(): void {
+
+    this.nombre = localStorage.getItem('nameUser')!;
     this.dashboardService.obtenerPedidos().subscribe({
       next:(data: IPedidosData) => {
-
+        console.log(data)
       this.pedidosData = data;
       this.setActiveTab(this.activeTab);
     }, error: (error) => {
@@ -68,13 +48,13 @@ export class DashboardComponent implements OnInit{
     this.activeTab = tab;
     switch (tab) {
       case 'Pendientes':
-        this.pedidosFiltrados = this.pedidosData.pedidos.pendientes;
+        this.pedidosFiltrados = this.pedidosData["pendientes"];
         break;
       case 'Aprobados':
-        this.pedidosFiltrados = this.pedidosData.pedidos.aprobados;
+        this.pedidosFiltrados = this.pedidosData.aprobados;
         break;
       case 'Entregados':
-        this.pedidosFiltrados = this.pedidosData.pedidos.entregados;
+        this.pedidosFiltrados = this.pedidosData.entregados;
         break;
       default:
         this.pedidosFiltrados = [];

@@ -16,15 +16,11 @@ export class PedidosService {
   url:string="appCART/";
   private pedido: Pedido = new Pedido(0,0,"","","",[]);
 
-  // private cerrarSidebarSubject=new Subject<boolean>();
-  // private actualizarCarritoSubject=new Subject<void>();
-  // actualizarCarrito$=this.actualizarCarritoSubject.asObservable();
-  // cerrarSidebar$=this.cerrarSidebarSubject.asObservable();
 
   constructor(private http:HttpClient) { }
 
 
-setPedido(pedido: Pedido) {
+  setPedido(pedido: Pedido) {
     this.pedido = pedido;
   }
 
