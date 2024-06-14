@@ -6,12 +6,14 @@ class CarritoSerializer(serializers.ModelSerializer):
         model = Carrito
         fields = ['id', 'producto', 'cantidad', 'usuario']
 
-class DetallePedidoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DetallePedido
-        fields = ["cantidad_productos", "precio_producto", "subtotal"]
-
 class ProductosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
-        fields = ["id_producto", "nombre_producto"]
+        fields = ["nombre_producto"]
+
+class DetallePedidoSerializer(serializers.ModelSerializer):
+    producto = ProductosSerializer(source='id_producto', read_only=True)
+
+    class Meta:
+        model = DetallePedido
+        fields = ["cantidad_productos", "precio_producto", "subtotal", "producto"]
