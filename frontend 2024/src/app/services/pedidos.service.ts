@@ -24,7 +24,7 @@ export class PedidosService {
   constructor(private http:HttpClient) { }
 
 
-  setPedido(pedido: Pedido) {
+setPedido(pedido: Pedido) {
     this.pedido = pedido;
   }
 
