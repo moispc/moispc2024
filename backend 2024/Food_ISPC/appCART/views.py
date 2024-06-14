@@ -126,7 +126,6 @@ class VerDashboard(APIView):
         pedidos_entregados = Pedido.objects.prefetch_related('detalles').all().filter(id_usuario_id=id_usuario, estado='Entregado' )
 
         pedidos = {
-            "pedidos": {
                 "pendientes": [
             {
                 "fecha_pedido": pedido.fecha_pedido,
@@ -153,7 +152,6 @@ class VerDashboard(APIView):
                         for pedido in pedidos_entregados],
 
         
-            }
             }
 
 
