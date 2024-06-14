@@ -49,7 +49,9 @@ export class InicioSesionComponent {
         },
         error:(error)=> {
           // Mostrar un mensaje de error o manejar el fallo de autenticación
-          this.errorMensaje=error;
+
+          this.errorMensaje="El usuario o contraseña es incorrecto";
+          this.form.markAllAsTouched();
         }
       });
     } else {
